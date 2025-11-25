@@ -3,27 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arbi Pacolli | Network & Software Developer</title>
+    <title>Arbi Pacolli | Network Engineer & Developer</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-        /* CSS Variables - Professional Cyber Color Scheme */
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variables for Light/Dark Mode */
         :root {
-            --primary: #0066ff;
-            --primary-dark: #0052cc;
-            --secondary: #00c7ff;
-            --accent: #00ff9d;
-            --dark: #0a0f1a;
-            --darker: #050811;
-            --light: #f0f4ff;
-            --gray: #8a9bba;
-            --success: #00ff9d;
-            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
-            --cyber-gradient: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent));
-            --card-bg: rgba(20, 25, 40, 0.7);
+            /* Light Mode Colors */
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #3b82f6;
+            --secondary: #06d6a0;
+            --accent: #8b5cf6;
+            --dark: #f8fafc;
+            --darker: #ffffff;
+            --light: #0f172a;
+            --gray: #64748b;
+            --gray-light: #475569;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --card-border: rgba(0, 0, 0, 0.1);
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            
+            /* Common Variables */
+            --gradient: linear-gradient(135deg, var(--primary), var(--accent));
+            --gradient-secondary: linear-gradient(135deg, var(--secondary), var(--primary-light));
             --header-height: 80px;
+            --border-radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
-        /* Reset & Base Styles */
+        /* Dark Mode Colors */
+        [data-theme="dark"] {
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --gray-light: #cbd5e1;
+            --card-bg: rgba(15, 23, 42, 0.8);
+            --card-border: rgba(255, 255, 255, 0.05);
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -41,21 +61,103 @@
             color: var(--light);
             background: var(--dark);
             overflow-x: hidden;
-            position: relative;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* Animated Background */
-        .cyber-bg {
+        /* Loading Screen */
+        #loading-screen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -2;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(0, 102, 255, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(0, 199, 255, 0.03) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(0, 255, 157, 0.02) 0%, transparent 50%);
+            background: var(--darker);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        #loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-logo {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(37, 99, 235, 0.2);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 2rem;
+        }
+
+        .loading-text {
+            color: var(--gray);
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 1.5rem;
+            right: 2rem;
+            z-index: 1001;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .theme-toggle i {
+            font-size: 1.2rem;
+            color: var(--light);
+        }
+
+        /* Background Elements */
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.03;
+            background-image: 
+                radial-gradient(circle at 20% 80%, var(--primary) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, var(--accent) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, var(--secondary) 0%, transparent 50%);
         }
 
         .container {
@@ -69,18 +171,18 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(10, 15, 26, 0.95);
+            background: var(--card-bg);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             z-index: 1000;
             padding: 1rem 0;
-            transition: all 0.3s ease;
-            border-bottom: 1px solid rgba(0, 102, 255, 0.1);
+            transition: var(--transition);
+            border-bottom: 1px solid var(--card-border);
         }
 
         header.scrolled {
             padding: 0.7rem 0;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: var(--shadow);
         }
 
         .navbar {
@@ -92,7 +194,7 @@
         .logo {
             font-size: 1.8rem;
             font-weight: 800;
-            background: var(--cyber-gradient);
+            background: var(--gradient);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -114,7 +216,7 @@
             font-weight: 500;
             padding: 0.5rem 0;
             position: relative;
-            transition: all 0.3s ease;
+            transition: var(--transition);
         }
 
         .nav-links a::after {
@@ -124,8 +226,8 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: var(--cyber-gradient);
-            transition: width 0.3s ease;
+            background: var(--gradient);
+            transition: var(--transition);
         }
 
         .nav-links a:hover::after,
@@ -152,99 +254,54 @@
             padding-top: var(--header-height);
         }
 
-        /* Network Animation */
-        .network-animation {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.3;
-        }
-
-        .node {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: var(--primary);
-            border-radius: 50%;
-            animation: nodePulse 2s infinite;
-        }
-
-        .connection {
-            position: absolute;
-            height: 2px;
-            background: var(--secondary);
-            transform-origin: left center;
-            animation: connectionFlow 3s infinite;
-        }
-
-        @keyframes nodePulse {
-            0%, 100% { transform: scale(1); opacity: 0.7; }
-            50% { transform: scale(1.2); opacity: 1; }
-        }
-
-        @keyframes connectionFlow {
-            0% { background: var(--primary); }
-            50% { background: var(--accent); }
-            100% { background: var(--primary); }
-        }
-
         .hero-content {
             max-width: 800px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--gradient);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
         }
 
         .hero h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
             font-weight: 800;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             line-height: 1.1;
-            background: var(--cyber-gradient);
+        }
+
+        .hero h1 .gradient-text {
+            background: var(--gradient);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .typing-container {
-            display: inline-block;
-        }
-
-        .typing-text {
-            color: var(--accent);
-            border-right: 3px solid var(--accent);
-            animation: blink 1s infinite;
-            padding-right: 5px;
-        }
-
-        @keyframes blink {
-            0%, 100% { border-color: var(--accent); }
-            50% { border-color: transparent; }
-        }
-
-        .hero-subtitle {
-            font-size: 1.5rem;
-            color: var(--secondary);
-            margin-bottom: 1.5rem;
-            font-weight: 600;
-        }
-
         .hero-description {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: var(--gray);
             margin-bottom: 2.5rem;
             max-width: 600px;
+            line-height: 1.6;
         }
 
         .btn {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 0.9rem 2.2rem;
-            border-radius: 4px;
+            padding: 1rem 2.2rem;
+            border-radius: var(--border-radius);
             text-decoration: none;
             font-weight: 600;
-            transition: all 0.3s ease;
+            transition: var(--transition);
             cursor: pointer;
             border: none;
             font-size: 1rem;
@@ -268,14 +325,14 @@
         }
 
         .btn-primary {
-            background: var(--cyber-gradient);
-            color: var(--dark);
-            box-shadow: 0 0 20px rgba(0, 102, 255, 0.3);
+            background: var(--gradient);
+            color: white;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
         }
 
         .btn-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 0 30px rgba(0, 102, 255, 0.5);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
         }
 
         .btn-secondary {
@@ -285,9 +342,9 @@
         }
 
         .btn-secondary:hover {
-            background: rgba(0, 102, 255, 0.1);
+            background: rgba(37, 99, 235, 0.1);
             transform: translateY(-3px);
-            box-shadow: 0 0 20px rgba(0, 102, 255, 0.2);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2);
         }
 
         .btn-group {
@@ -300,38 +357,27 @@
         /* Stats Section */
         .stats {
             padding: 5rem 0;
-            background: rgba(15, 20, 35, 0.5);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stats::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: var(--cyber-gradient);
+            background: var(--card-bg);
         }
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 2rem;
         }
 
         .stat-card {
             background: var(--card-bg);
             padding: 2.5rem 2rem;
-            border-radius: 8px;
+            border-radius: var(--border-radius);
             text-align: center;
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 102, 255, 0.1);
-            transition: all 0.4s ease;
+            border: 1px solid var(--card-border);
+            transition: var(--transition);
             position: relative;
             overflow: hidden;
+            box-shadow: var(--shadow);
         }
 
         .stat-card::before {
@@ -340,14 +386,12 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 3px;
-            background: var(--cyber-gradient);
+            height: 4px;
+            background: var(--gradient);
         }
 
         .stat-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            border-color: var(--primary);
         }
 
         .stat-icon {
@@ -356,12 +400,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(0, 102, 255, 0.1);
+            background: rgba(37, 99, 235, 0.1);
             border-radius: 50%;
             margin: 0 auto 1.5rem;
             font-size: 2rem;
             color: var(--primary);
-            transition: transform 0.4s ease;
+            transition: var(--transition);
         }
 
         .stat-card:hover .stat-icon {
@@ -369,7 +413,7 @@
         }
 
         .stat-number {
-            font-size: 3.5rem;
+            font-size: 3rem;
             font-weight: 800;
             color: var(--primary);
             margin-bottom: 0.5rem;
@@ -378,7 +422,7 @@
 
         .stat-label {
             color: var(--light);
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 500;
         }
 
@@ -388,23 +432,34 @@
             position: relative;
         }
 
-        .section-title {
-            font-size: clamp(2rem, 4vw, 2.5rem);
-            font-weight: 700;
-            margin-bottom: 3rem;
+        .section-header {
             text-align: center;
-            position: relative;
+            margin-bottom: 4rem;
         }
 
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background: var(--cyber-gradient);
+        .section-badge {
+            display: inline-block;
+            background: var(--gradient);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--light);
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         /* About Section */
@@ -417,9 +472,9 @@
 
         .about-photo {
             position: relative;
-            border-radius: 8px;
+            border-radius: var(--border-radius);
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            box-shadow: var(--shadow);
             aspect-ratio: 1;
             border: 2px solid var(--primary);
         }
@@ -428,7 +483,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: var(--cyber-gradient);
+            background: var(--gradient);
             opacity: 0.2;
             z-index: 1;
         }
@@ -443,106 +498,7 @@
             color: var(--gray);
             margin-bottom: 1.5rem;
             font-size: 1.1rem;
-        }
-
-        /* Networking Section */
-        .networking-section {
-            background: rgba(15, 20, 35, 0.5);
-        }
-
-        .ccna-certifications {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .ccna-card {
-            background: var(--card-bg);
-            padding: 2rem;
-            border-radius: 8px;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 102, 255, 0.1);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .ccna-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: var(--cyber-gradient);
-        }
-
-        .ccna-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        .ccna-card h3 {
-            color: var(--primary);
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .ccna-card ul {
-            list-style: none;
-            margin-left: 1rem;
-        }
-
-        .ccna-card li {
-            padding: 0.5rem 0;
-            color: var(--gray);
-            position: relative;
-        }
-
-        .ccna-card li::before {
-            content: '▸';
-            position: absolute;
-            left: -1rem;
-            color: var(--accent);
-        }
-
-        .networking-skills {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .networking-skill {
-            background: var(--card-bg);
-            padding: 1.5rem;
-            border-radius: 8px;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 102, 255, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .networking-skill:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        .networking-skill h4 {
-            color: var(--primary);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .networking-skill p {
-            color: var(--gray);
-            font-size: 0.9rem;
+            line-height: 1.7;
         }
 
         /* Skills Section */
@@ -554,14 +510,15 @@
 
         .skill-category {
             background: var(--card-bg);
-            padding: 2rem;
-            border-radius: 8px;
+            padding: 2.5rem 2rem;
+            border-radius: var(--border-radius);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 102, 255, 0.1);
-            transition: all 0.3s ease;
+            border: 1px solid var(--card-border);
+            transition: var(--transition);
             position: relative;
             overflow: hidden;
+            box-shadow: var(--shadow);
         }
 
         .skill-category::before {
@@ -570,11 +527,11 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 3px;
-            background: var(--cyber-gradient);
+            height: 4px;
+            background: var(--gradient);
             transform: scaleX(0);
             transform-origin: left;
-            transition: transform 0.3s ease;
+            transition: var(--transition);
         }
 
         .skill-category:hover::before {
@@ -583,13 +540,12 @@
 
         .skill-category:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
         }
 
         .skill-category h3 {
-            color: var(--primary);
+            color: var(--light);
             margin-bottom: 1.5rem;
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -607,7 +563,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: color 0.3s ease;
+            transition: var(--transition);
         }
 
         .skill-item:hover {
@@ -631,7 +587,7 @@
 
         .skill-level-bar {
             height: 100%;
-            background: var(--cyber-gradient);
+            background: var(--gradient);
             border-radius: 3px;
             transform: scaleX(0);
             transform-origin: left;
@@ -647,24 +603,23 @@
         /* Projects Section */
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 2.5rem;
         }
 
         .project-card {
             background: var(--card-bg);
-            border-radius: 12px;
+            border-radius: var(--border-radius);
             overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: var(--transition);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 102, 255, 0.1);
+            border: 1px solid var(--card-border);
             height: 100%;
             display: flex;
             flex-direction: column;
             position: relative;
-            transform-origin: center;
-            will-change: transform;
+            box-shadow: var(--shadow);
         }
 
         .project-card::before {
@@ -674,9 +629,9 @@
             left: 0;
             width: 100%;
             height: 4px;
-            background: var(--cyber-gradient);
+            background: var(--gradient);
             transform: scaleX(0);
-            transition: transform 0.4s ease;
+            transition: var(--transition);
         }
 
         .project-card:hover::before {
@@ -684,8 +639,7 @@
         }
 
         .project-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            transform: translateY(-8px);
         }
 
         .project-image {
@@ -698,7 +652,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.6s ease;
+            transition: var(--transition);
         }
 
         .project-card:hover .project-image img {
@@ -734,20 +688,19 @@
         }
 
         .tech-tag {
-            background: rgba(0, 102, 255, 0.1);
+            background: rgba(37, 99, 235, 0.1);
             color: var(--primary);
             padding: 0.4rem 1rem;
-            border-radius: 6px;
+            border-radius: 50px;
             font-size: 0.85rem;
             font-weight: 500;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(0, 102, 255, 0.2);
+            transition: var(--transition);
+            border: 1px solid rgba(37, 99, 235, 0.2);
         }
 
         .tech-tag:hover {
-            background: rgba(0, 102, 255, 0.2);
+            background: rgba(37, 99, 235, 0.2);
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 102, 255, 0.2);
         }
 
         .project-links {
@@ -774,9 +727,10 @@
             gap: 1rem;
             padding: 1.5rem;
             background: var(--card-bg);
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(0, 102, 255, 0.1);
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            border: 1px solid var(--card-border);
+            box-shadow: var(--shadow);
         }
 
         .contact-method:hover {
@@ -787,8 +741,8 @@
         .contact-icon {
             width: 50px;
             height: 50px;
-            border-radius: 8px;
-            background: var(--cyber-gradient);
+            border-radius: var(--border-radius);
+            background: var(--gradient);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -798,6 +752,7 @@
 
         .contact-details h4 {
             margin-bottom: 0.3rem;
+            color: var(--light);
         }
 
         .contact-details p {
@@ -808,10 +763,11 @@
         .contact-form {
             background: var(--card-bg);
             padding: 2.5rem;
-            border-radius: 8px;
+            border-radius: var(--border-radius);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 102, 255, 0.1);
+            border: 1px solid var(--card-border);
+            box-shadow: var(--shadow);
         }
 
         .form-group {
@@ -829,19 +785,19 @@
             width: 100%;
             padding: 1rem;
             border: none;
-            border-radius: 4px;
+            border-radius: var(--border-radius);
             background: rgba(255, 255, 255, 0.05);
             color: var(--light);
             font-family: inherit;
-            border: 1px solid rgba(0, 102, 255, 0.2);
-            transition: all 0.3s ease;
+            border: 1px solid var(--card-border);
+            transition: var(--transition);
         }
 
         .form-control:focus {
             outline: none;
             border-color: var(--primary);
             background: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
 
         textarea.form-control {
@@ -864,7 +820,7 @@
             left: 0;
             width: 100%;
             height: 2px;
-            background: var(--cyber-gradient);
+            background: var(--gradient);
         }
 
         .footer-content {
@@ -878,7 +834,7 @@
             font-weight: 700;
             margin-bottom: 1.5rem;
             display: inline-block;
-            background: var(--cyber-gradient);
+            background: var(--gradient);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -895,7 +851,7 @@
         .footer-links a {
             color: var(--gray);
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: var(--transition);
             position: relative;
         }
 
@@ -907,7 +863,7 @@
             width: 0;
             height: 2px;
             background: var(--primary);
-            transition: width 0.3s ease;
+            transition: var(--transition);
         }
 
         .footer-links a:hover {
@@ -928,29 +884,29 @@
         .social-link {
             width: 45px;
             height: 45px;
-            border-radius: 8px;
+            border-radius: var(--border-radius);
             background: var(--card-bg);
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--light);
             font-size: 1.2rem;
-            transition: all 0.3s ease;
+            transition: var(--transition);
             text-decoration: none;
-            border: 1px solid rgba(0, 102, 255, 0.2);
+            border: 1px solid var(--card-border);
         }
 
         .social-link:hover {
-            background: var(--cyber-gradient);
+            background: var(--gradient);
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 102, 255, 0.4);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
         }
 
         .copyright {
             color: var(--gray);
             font-size: 0.9rem;
             padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid var(--card-border);
         }
 
         /* Back to Top */
@@ -960,16 +916,16 @@
             right: 2rem;
             width: 50px;
             height: 50px;
-            border-radius: 8px;
-            background: var(--cyber-gradient);
-            color: var(--dark);
+            border-radius: var(--border-radius);
+            background: var(--gradient);
+            color: white;
             display: flex;
             align-items: center;
             justify-content: center;
             text-decoration: none;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.3s ease;
+            transition: var(--transition);
             z-index: 999;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             border: none;
@@ -986,147 +942,10 @@
             transform: translateY(-3px);
         }
 
-        /* Certification Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 2000;
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            animation: fadeIn 0.3s ease;
-        }
-
-        .modal-content {
-            position: relative;
-            background: var(--card-bg);
-            margin: 2% auto;
-            padding: 2rem;
-            width: 90%;
-            max-width: 1000px;
-            border-radius: 12px;
-            border: 1px solid rgba(0, 102, 255, 0.2);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid rgba(0, 102, 255, 0.2);
-        }
-
-        .modal-title {
-            font-size: 1.8rem;
-            background: var(--cyber-gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 700;
-        }
-
-        .close-modal {
-            background: none;
-            border: none;
-            color: var(--gray);
-            font-size: 2rem;
-            cursor: pointer;
-            transition: color 0.3s ease;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-        }
-
-        .close-modal:hover {
-            color: var(--accent);
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .certifications-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .certification-item {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(0, 102, 255, 0.1);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .certification-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-            border-color: var(--primary);
-        }
-
-        .certification-image {
-            width: 100%;
-            height: 200px;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .certification-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            padding: 15px;
-            background: white;
-            transition: transform 0.3s ease;
-        }
-
-        .certification-item:hover .certification-image img {
-            transform: scale(1.05);
-        }
-
-        .certification-info {
-            padding: 1.5rem;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .certification-name {
-            font-size: 1.2rem;
-            color: var(--light);
-            margin-bottom: 0.5rem;
-        }
-
-        .certification-issuer {
-            color: var(--accent);
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .certification-date {
-            color: var(--gray);
-            font-size: 0.8rem;
-        }
-
         /* Animations */
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to   { opacity: 1; }
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
 
         .fade-in {
@@ -1147,7 +966,7 @@
                 right: -100%;
                 width: 280px;
                 height: calc(100vh - var(--header-height));
-                background: var(--darker);
+                background: var(--card-bg);
                 flex-direction: column;
                 padding: 2rem;
                 transition: right 0.3s ease;
@@ -1163,9 +982,10 @@
             .mobile-menu-btn {
                 display: block;
             }
-
-            .certifications-grid {
-                grid-template-columns: 1fr;
+            
+            .theme-toggle {
+                top: 1rem;
+                right: 1rem;
             }
         }
 
@@ -1177,10 +997,6 @@
             .btn-group {
                 flex-direction: column;
                 align-items: flex-start;
-            }
-            
-            .hero-subtitle {
-                font-size: 1.2rem;
             }
             
             .hero-description {
@@ -1214,12 +1030,6 @@
             .projects-grid {
                 grid-template-columns: 1fr;
             }
-
-            .modal-content {
-                width: 95%;
-                margin: 5% auto;
-                padding: 1.5rem;
-            }
         }
 
         @media (max-width: 576px) {
@@ -1248,9 +1058,21 @@
         }
     </style>
 </head>
-<body>
-    <!-- Animated Background -->
-    <div class="cyber-bg"></div>
+<body data-theme="light">
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loading-logo">Arbi Pacolli</div>
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading Portfolio...</div>
+    </div>
+
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- Background Pattern -->
+    <div class="bg-pattern"></div>
     
     <!-- Header -->
     <header>
@@ -1263,7 +1085,6 @@
                 <ul class="nav-links">
                     <li><a href="#home" class="active">Home</a></li>
                     <li><a href="#about">About</a></li>
-                    <li><a href="#networking">Networking</a></li>
                     <li><a href="#skills">Skills</a></li>
                     <li><a href="#projects">Projects</a></li>
                     <li><a href="#contact">Contact</a></li>
@@ -1277,23 +1098,18 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero">
-        <div class="network-animation" id="networkAnimation">
-            <!-- Network nodes and connections will be generated by JavaScript -->
-        </div>
         <div class="container">
             <div class="hero-content fade-in">
-                <h1>
-                    <span class="typing-container"><span class="typing-text" id="typing-text"></span></span>
-                </h1>
-                <p class="hero-subtitle">NETWORK ENGINEER & SOFTWARE DEVELOPER</p>
+                <span class="hero-badge">Network Engineer & Developer</span>
+                <h1>Hi, I'm <span class="gradient-text">Arbi Pacolli</span></h1>
                 <p class="hero-description">CCNA-certified network professional and full-stack developer specializing in building secure, scalable infrastructure and applications.</p>
                 <div class="btn-group">
                     <a href="#projects" class="btn btn-primary">
                         <i class="fas fa-code"></i> View Projects
                     </a>
-                    <button id="viewCertificationsBtn" class="btn btn-secondary">
-                        <i class="fas fa-file-certificate"></i> View Certifications
-                    </button>
+                    <a href="#contact" class="btn btn-secondary">
+                        <i class="fas fa-paper-plane"></i> Get In Touch
+                    </a>
                 </div>
             </div>
         </div>
@@ -1341,11 +1157,15 @@
     <!-- About Section -->
     <section id="about">
         <div class="container">
-            <h2 class="section-title">About Me</h2>
+            <div class="section-header">
+                <span class="section-badge">About Me</span>
+                <h2 class="section-title">My Journey in Tech</h2>
+                <p class="section-subtitle">From networking fundamentals to full-stack development</p>
+            </div>
             <div class="about-container">
                 <div class="about-photo fade-in">
                     <!-- Add your photo here -->
-                    <div style="width:100%;height:100%;background:var(--cyber-gradient);display:flex;align-items:center;justify-content:center;color:var(--dark);font-size:1.2rem;font-weight:600;">
+                    <div style="width:100%;height:100%;background:var(--gradient);display:flex;align-items:center;justify-content:center;color:white;font-size:1.2rem;font-weight:600;">
                         <i class="fas fa-user-tie" style="font-size: 3rem;"></i>
                     </div>
                 </div>
@@ -1357,133 +1177,7 @@
                         <a href="cv/Arbi Pacolli CV.pdf" class="btn btn-primary" download>
                             <i class="fas fa-paper-plane"></i> Download CV
                         </a>
-                        <button id="viewCertificationsBtn2" class="btn btn-secondary">
-                            <i class="fas fa-file-certificate"></i> View Certifications
-                        </button>
-                        <!-- Certifications Modal -->
-                        <div id="certificationsModal" class="modal">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h2 class="modal-title">My Certifications</h2>
-                                    <button class="close-modal">&times;</button>
-                                </div>
-                                <div class="certifications-grid">
-                                    <div class="certification-item">
-                                        <div class="certification-image">
-                                            <img src="Certifications/Hackathon 112.jpeg" alt="Hackathon 112" class="certification-image">
-                                        </div>
-                                        <div class="certification-info">
-                                            <h3 class="certification-name">Hackathon Certificate</h3>
-                                            <p class="certification-issuer">SHPiK & SHML"Gjin Gazulli"</p>
-                                            <p class="certification-date">Completed: 2023</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="certifications-grid">
-                                    <div class="certification-item">
-                                        <div class="certification-image">
-                                            <img src="Certifications/CCNA 1.jpeg" alt="CCNA: Introduction to Networks" class="certification-image">
-                                        </div>
-                                        <div class="certification-info">
-                                            <h3 class="certification-name">CCNA: Introduction to Networks</h3>
-                                            <p class="certification-issuer">Cisco Networking Academy</p>
-                                            <p class="certification-date">Completed: 2024</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="certifications-grid">
-                                    <div class="certification-item">
-                                        <div class="certification-image">
-                                            <img src="Certifications/CCNA 2.jpeg" alt="CCNA: Switching, Routing and Wireless Essentials" class="certification-image">
-                                        </div>
-                                        <div class="certification-info">
-                                            <h3 class="certification-name">CCNA: Switching, Routing and Wireless Essentials</h3>
-                                            <p class="certification-issuer">Cisco Networking Academy</p>
-                                            <p class="certification-date">Completed: 2024</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="certifications-grid">
-                                    <div class="certification-item">
-                                        <div class="certification-image">
-                                            <img src="Certifications/CCNA 3.jpeg" alt="CCNA: Enterprise Networking, Security and Automation" class="certification-image">
-                                        </div>
-                                        <div class="certification-info">
-                                            <h3 class="certification-name">CCNA: Enterprise Networking, Security and Automation</h3>
-                                            <p class="certification-issuer">Cisco Networking Academy</p>
-                                            <p class="certification-date">Completed: 2024</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="certifications-grid">
-                                    <div class="certification-item">
-                                        <div class="certification-image">
-                                            <img src="Certifications/Shkolla Digjitale.jpeg" alt="Coding Hour Certificate">
-                                        </div>
-                                        <div class="certification-info">
-                                            <h3 class="certification-name">Coding Hour</h3>
-                                            <p class="certification-issuer">Shkolla Digjitale</p>
-                                            <p class="certification-date">Completed: 2024</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="certifications-grid">
-                                    <div class="certification-item">
-                                        <div class="certification-image">
-                                            <img src="Certifications/Py Training.jpeg" alt="Python Programming" class="certification-image">
-                                        </div>
-                                        <div class="certification-info">
-                                            <h3 class="certification-name">Python Training</h3>
-                                            <p class="certification-issuer">RIT | Kosovo</p>
-                                            <p class="certification-date">Completed: 2025</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Networking Section -->
-    <section id="networking" class="networking-section">
-        <div class="container">
-            <h2 class="section-title">Networking Expertise</h2>
-            
-            <div class="ccna-certifications">
-                <div class="ccna-card fade-in">
-                    <h3><i class="fas fa-certificate"></i> CCNA: Introduction to Networks</h3>
-                    <ul>
-                        <li>Network architectures and components</li>
-                        <li>IP addressing and subnetting</li>
-                        <li>Ethernet concepts and LAN switching</li>
-                        <li>Basic router configuration</li>
-                        <li>Network security fundamentals</li>
-                    </ul>
-                </div>
-                
-                <div class="ccna-card fade-in">
-                    <h3><i class="fas fa-certificate"></i> CCNA: Switching, Routing and Wireless Essentials</h3>
-                    <ul>
-                        <li>VLANs and inter-VLAN routing</li>
-                        <li>STP and EtherChannel protocols</li>
-                        <li>DHCP and DNS services</li>
-                        <li>Wireless LAN concepts</li>
-                        <li>Network automation basics</li>
-                    </ul>
-                </div>
-                
-                <div class="ccna-card fade-in">
-                    <h3><i class="fas fa-certificate"></i> CCNA: Enterprise Networking</h3>
-                    <ul>
-                        <li>OSPF and EIGRP routing protocols</li>
-                        <li>WAN technologies and VPNs</li>
-                        <li>Quality of Service (QoS)</li>
-                        <li>Network security and monitoring</li>
-                        <li>Network virtualization</li>
-                    </ul>
                 </div>
             </div>
         </div>
@@ -1492,7 +1186,11 @@
     <!-- Skills Section -->
     <section id="skills">
         <div class="container">
-            <h2 class="section-title">Technical Skills</h2>
+            <div class="section-header">
+                <span class="section-badge">Skills</span>
+                <h2 class="section-title">Technical Expertise</h2>
+                <p class="section-subtitle">A blend of networking knowledge and development skills</p>
+            </div>
             <div class="skills-grid">
                 <div class="skill-category fade-in">
                     <h3><i class="fas fa-code"></i> Development</h3>
@@ -1564,7 +1262,11 @@
     <!-- Projects Section -->
     <section id="projects">
         <div class="container">
-            <h2 class="section-title">Technical Projects</h2>
+            <div class="section-header">
+                <span class="section-badge">Projects</span>
+                <h2 class="section-title">My Recent Work</h2>
+                <p class="section-subtitle">A showcase of my technical projects and contributions</p>
+            </div>
             <div class="projects-grid">
                 <div class="project-card fade-in">
                     <div class="project-image">
@@ -1631,7 +1333,11 @@
     <!-- Contact Section -->
     <section id="contact">
         <div class="container">
-            <h2 class="section-title">Get In Touch</h2>
+            <div class="section-header">
+                <span class="section-badge">Contact</span>
+                <h2 class="section-title">Get In Touch</h2>
+                <p class="section-subtitle">Let's discuss how we can work together</p>
+            </div>
             <div class="contact-container">
                 <div class="contact-info">
                     <p>I'm available for networking projects, infrastructure design, and full-stack development opportunities. Let's connect and discuss how we can work together.</p>
@@ -1641,7 +1347,7 @@
                         </div>
                         <div class="contact-details">
                             <h4>Email</h4>
-                            <p>arbipacolli@gmail.com</p>
+                            <p>arbipacolli08@gmail.com</p>
                         </div>
                     </div>
                     <div class="contact-method fade-in">
@@ -1650,7 +1356,7 @@
                         </div>
                         <div class="contact-details">
                             <h4>Phone</h4>
-                            <p>+383 44 123 456</p>
+                            <p>+383 45 710 810</p>
                         </div>
                     </div>
                     <div class="contact-method fade-in">
@@ -1693,7 +1399,6 @@
             <div class="footer-links">
                 <a href="#home">Home</a>
                 <a href="#about">About</a>
-                <a href="#networking">Networking</a>
                 <a href="#skills">Skills</a>
                 <a href="#projects">Projects</a>
                 <a href="#contact">Contact</a>
@@ -1718,198 +1423,49 @@
         <i class="fas fa-arrow-up"></i>
     </button>
 
-    <!-- Certifications Modal -->
-    <div id="certificationsModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">My Certifications</h2>
-                <button class="close-modal">&times;</button>
-            </div>
-            <div class="certifications-grid">
-                <div class="certification-item">
-                    <div class="certification-image">
-                        CCNA: Introduction to Networks
-                    </div>
-                    <div class="certification-info">
-                        <h3 class="certification-name">CCNA: Introduction to Networks</h3>
-                        <p class="certification-issuer">Cisco Networking Academy</p>
-                        <p class="certification-date">Completed: 2024</p>
-                    </div>
-                </div>
-                <div class="certification-item">
-                    <div class="certification-image">
-                        CCNA: Switching, Routing, and Wireless
-                    </div>
-                    <div class="certification-info">
-                        <h3 class="certification-name">CCNA: Switching, Routing, and Wireless</h3>
-                        <p class="certification-issuer">Cisco Networking Academy</p>
-                        <p class="certification-date">Completed: 2024</p>
-                    </div>
-                </div>
-                <div class="certification-item">
-                    <div class="certification-image">
-                        CCNA: Enterprise Networking
-                    </div>
-                    <div class="certification-info">
-                        <h3 class="certification-name">CCNA: Enterprise Networking</h3>
-                        <p class="certification-issuer">Cisco Networking Academy</p>
-                        <p class="certification-date">Completed: 2024</p>
-                    </div>
-                </div>
-                <div class="certification-item">
-                    <div class="certification-image">
-                        Network Security Fundamentals
-                    </div>
-                    <div class="certification-info">
-                        <h3 class="certification-name">Network Security Fundamentals</h3>
-                        <p class="certification-issuer">Cisco</p>
-                        <p class="certification-date">Completed: 2024</p>
-                    </div>
-                </div>
-                <div class="certification-item">
-                    <div class="certification-image">
-                        Python Programming
-                    </div>
-                    <div class="certification-info">
-                        <h3 class="certification-name">Python Programming Certificate</h3>
-                        <p class="certification-issuer">Online Course Platform</p>
-                        <p class="certification-date">Completed: 2023</p>
-                    </div>
-                </div>
-                <div class="certification-item">
-                    <div class="certification-image">
-                        Web Development Fundamentals
-                    </div>
-                    <div class="certification-info">
-                        <h3 class="certification-name">Web Development Fundamentals</h3>
-                        <p class="certification-issuer">Online Course Platform</p>
-                        <p class="certification-date">Completed: 2023</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script>
+        // Theme Toggle Functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        const body = document.body;
+
+        // Check for saved theme preference or default to light
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        body.setAttribute('data-theme', currentTheme);
+        updateThemeIcon(currentTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+
+        function updateThemeIcon(theme) {
+            if (theme === 'light') {
+                themeIcon.className = 'fas fa-moon';
+            } else {
+                themeIcon.className = 'fas fa-sun';
+            }
+        }
+
+        // Loading screen functionality
+        window.addEventListener('load', function() {
+            // Hide loading screen after page is fully loaded
+            setTimeout(function() {
+                const loadingScreen = document.getElementById('loading-screen');
+                loadingScreen.classList.add('hidden');
+                
+                // Remove loading screen from DOM after transition completes
+                setTimeout(function() {
+                    loadingScreen.style.display = 'none';
+                }, 800);
+            }, 1500);
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
-            // Create network animation
-            const networkAnimation = document.getElementById('networkAnimation');
-            const nodes = [];
-            const connections = [];
-            
-            // Create nodes
-            for (let i = 0; i < 15; i++) {
-                const node = document.createElement('div');
-                node.className = 'node';
-                node.style.left = `${Math.random() * 100}%`;
-                node.style.top = `${Math.random() * 100}%`;
-                node.style.animationDelay = `${Math.random() * 2}s`;
-                networkAnimation.appendChild(node);
-                nodes.push(node);
-            }
-            
-            // Create connections between nearby nodes
-            nodes.forEach((node, index) => {
-                for (let i = index + 1; i < nodes.length; i++) {
-                    const node1 = node;
-                    const node2 = nodes[i];
-                    
-                    const x1 = parseFloat(node1.style.left);
-                    const y1 = parseFloat(node1.style.top);
-                    const x2 = parseFloat(node2.style.left);
-                    const y2 = parseFloat(node2.style.top);
-                    
-                    const distance = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
-                    
-                    if (distance < 30) { // Only connect nearby nodes
-                        const connection = document.createElement('div');
-                        connection.className = 'connection';
-                        
-                        const length = distance;
-                        const angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
-                        
-                        connection.style.width = `${length}%`;
-                        connection.style.left = `${x1}%`;
-                        connection.style.top = `${y1}%`;
-                        connection.style.transform = `rotate(${angle}deg)`;
-                        connection.style.animationDelay = `${Math.random() * 3}s`;
-                        
-                        networkAnimation.appendChild(connection);
-                        connections.push(connection);
-                    }
-                }
-            });
-
-            // Certification Modal Functionality
-            const modal = document.getElementById('certificationsModal');
-            const viewCertificationsBtn = document.getElementById('viewCertificationsBtn');
-            const viewCertificationsBtn2 = document.getElementById('viewCertificationsBtn2');
-            const closeModal = document.querySelector('.close-modal');
-
-            function openModal() {
-                modal.style.display = 'block';
-                document.body.style.overflow = 'hidden';
-            }
-
-            function closeModalFunc() {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-
-            viewCertificationsBtn.addEventListener('click', openModal);
-            viewCertificationsBtn2.addEventListener('click', openModal);
-            closeModal.addEventListener('click', closeModalFunc);
-
-            // Close modal when clicking outside
-            window.addEventListener('click', function(event) {
-                if (event.target === modal) {
-                    closeModalFunc();
-                }
-            });
-
-            // Close modal with Escape key
-            document.addEventListener('keydown', function(event) {
-                if (event.key === 'Escape' && modal.style.display === 'block') {
-                    closeModalFunc();
-                }
-            });
-
-            // Typing Animation
-            const typingText = document.getElementById('typing-text');
-            const texts = ["NETWORK ENGINEER", "SOFTWARE DEVELOPER", "CCNA CERTIFIED", "ARBI PACOLLI"];
-            let textIndex = 0;
-            let charIndex = 0;
-            let isDeleting = false;
-            let typingSpeed = 100;
-
-            function type() {
-                const currentText = texts[textIndex];
-                
-                if (isDeleting) {
-                    typingText.textContent = currentText.substring(0, charIndex - 1);
-                    charIndex--;
-                    typingSpeed = 50;
-                } else {
-                    typingText.textContent = currentText.substring(0, charIndex + 1);
-                    charIndex++;
-                    typingSpeed = 100;
-                }
-                
-                if (!isDeleting && charIndex === currentText.length) {
-                    isDeleting = true;
-                    typingSpeed = 1500;
-                } else if (isDeleting && charIndex === 0) {
-                    isDeleting = false;
-                    textIndex = (textIndex + 1) % texts.length;
-                    typingSpeed = 500;
-                }
-                
-                setTimeout(type, typingSpeed);
-            }
-
-            // Start typing animation
-            setTimeout(type, 1000);
-
             // Animate numbers counting up
             const statNumbers = document.querySelectorAll('.stat-number');
             const duration = 2000;
