@@ -1495,73 +1495,78 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-badge">Contact</span>
-                <h2 class="section-title">Get In Touch</h2>
-                <p class="section-subtitle">Let's discuss how we can work together</p>
-            </div>
-            <div class="contact-container">
-                <div class="contact-info">
-                    <p>I'm available for networking projects, infrastructure design, and full-stack development opportunities. Let's connect and discuss how we can work together.</p>
-                    <div class="contact-method fade-in">
-                        <div class="contact-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h4>Email</h4>
-                            <p>arbipacolli08@gmail.com</p>
-                        </div>
+<!-- Contact Section -->
+<section id="contact">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-badge">Contact</span>
+            <h2 class="section-title">Get In Touch</h2>
+            <p class="section-subtitle">Let's discuss how we can work together</p>
+        </div>
+        <div class="contact-container">
+            <div class="contact-info">
+                <p>I'm available for networking projects, infrastructure design, and full-stack development opportunities. Let's connect and discuss how we can work together.</p>
+                <div class="contact-method fade-in">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
                     </div>
-                    <div class="contact-method fade-in">
-                        <div class="contact-icon">
-                            <i class="fas fa-phone"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h4>Phone</h4>
-                            <p>+383 45 710 810</p>
-                        </div>
+                    <div class="contact-details">
+                        <h4>Email</h4>
+                        <p>arbipacolli08@gmail.com</p>
                     </div>
-                    <div class="contact-method fade-in">
-                        <div class="contact-icon">
+                </div>
+                <div class="contact-method fade-in">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h4>Phone</h4>
+                        <p>+383 45 710 810</p>
+                    </div>
+                </div>
+                <div class="contact-method fade-in">
+                    <div class="contact-icon">
                         <i class="fas fa-map-marker-alt"></i>
-                            </div>
-                        <div class="contact-details">
-                            <h4>Location</h4>
-                            <p>Based in Kosovo</p>
-                        </div>
+                    </div>
+                    <div class="contact-details">
+                        <h4>Location</h4>
+                        <p>Based in Kosovo</p>
                     </div>
                 </div>
-                <div class="contact-form fade-in">
-                    <form id="contactForm" action="https://formspree.io/f/xwpngzjk" method="POST">
-                        <div class="form-group">
-                            <label for="name">Full Name</label>
-                            <input type="text" id="name" name="name" class="form-control" placeholder="Your name" required>
-                        </div>
+            </div>
+            <div class="contact-form fade-in">
+                <form id="contactForm" action="https://formspree.io/f/xvgeqwgw" method="POST">
+                    <!-- Honeypot field for spam prevention -->
+                    <input type="text" name="_gotcha" style="display:none">
                     
-                        <div class="form-group">
-                            <label for="email">Email Address</label>
-                            <input type="email" id="email" name="email" class="form-control" placeholder="Your email" required>
-                        </div>
+                    <div class="form-group">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" name="name" class="form-control" placeholder="Your name" required>
+                    </div>
                     
-                        <div class="form-group">
-                            <label for="message">Your Message</label>
-                            <textarea id="message" name="message" class="form-control" placeholder="How can I help you?" rows="5" required></textarea>
-                        </div>
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="_replyto" class="form-control" placeholder="Your email" required>
+                    </div>
                     
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-paper-plane"></i> Send Message
-                        </button>
-
-                        <div id="formMessage" style="margin-top: 1rem; display: none; padding: 1rem; border-radius: var(--border-radius);"></div>
-                    </form>
-                </div>
+                    <div class="form-group">
+                        <label for="message">Your Message *</label>
+                        <textarea id="message" name="message" class="form-control" placeholder="How can I help you?" rows="5" required></textarea>
+                    </div>
+                    
+                    <!-- Add subject field -->
+                    <input type="hidden" name="_subject" value="New Contact Form Submission from Portfolio">
+                    
+                    <button type="submit" class="btn btn-primary" id="submitBtn">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                    
+                    <div id="formMessage" style="margin-top: 1rem; padding: 1rem; border-radius: var(--border-radius); display: none;"></div>
+                </form>
             </div>
         </div>
-    </section>
-
+    </div>
+</section>
     <!-- Footer -->
     <footer>
         <div class="footer-content">
@@ -1625,7 +1630,7 @@ if (contactForm) {
     contactForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         
-        const submitBtn = this.querySelector('button[type="submit"]');
+        const submitBtn = document.getElementById('submitBtn');
         const originalText = submitBtn.innerHTML;
         const formMessage = document.getElementById('formMessage');
         
@@ -1636,58 +1641,95 @@ if (contactForm) {
         // Hide any previous messages
         if (formMessage) {
             formMessage.style.display = 'none';
-            formMessage.className = '';
+            formMessage.textContent = '';
         }
         
         try {
+            // Create form data
             const formData = new FormData(this);
             
+            // Send to Formspree
             const response = await fetch(this.action, {
                 method: 'POST',
-                body: formData,
+                body: new URLSearchParams(formData),
                 headers: {
-                    'Accept': 'application/json'
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
             
-            if (response.ok) {
+            // Check response
+            const data = await response.json();
+            
+            if (response.ok && data.ok) {
                 // Success
-                if (formMessage) {
-                    formMessage.innerHTML = '<i class="fas fa-check-circle"></i> Thank you! Your message has been sent successfully. I\'ll get back to you soon.';
-                    formMessage.style.display = 'block';
-                    formMessage.style.background = 'rgba(16, 185, 129, 0.1)';
-                    formMessage.style.border = '1px solid #10b981';
-                    formMessage.style.color = '#10b981';
-                }
+                showFormMessage('success', 'Thank you! Your message has been sent successfully. I\'ll get back to you soon.');
                 
                 // Reset form
                 contactForm.reset();
             } else {
-                // Error from Formspree
-                throw new Error('Form submission failed');
+                // Show Formspree error if available
+                if (data.error) {
+                    throw new Error(data.error);
+                } else {
+                    throw new Error('Form submission failed');
+                }
             }
+            
         } catch (error) {
             // Show error message
-            if (formMessage) {
-                formMessage.innerHTML = '<i class="fas fa-exclamation-circle"></i> Sorry, there was an error sending your message. Please try again or email me directly at arbipacolli08@gmail.com';
-                formMessage.style.display = 'block';
-                formMessage.style.background = 'rgba(239, 68, 68, 0.1)';
-                formMessage.style.border = '1px solid #ef4444';
-                formMessage.style.color = '#ef4444';
-            }
-            console.error('Form submission error:', error);
+            console.error('Form error:', error);
+            showFormMessage('error', 'Sorry, there was an error sending your message. Please try again or email me directly at arbipacolli08@gmail.com');
         } finally {
             // Reset button
             submitBtn.innerHTML = originalText;
             submitBtn.disabled = false;
-            
-            // Scroll to message
-            if (formMessage && formMessage.style.display === 'block') {
-                formMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
         }
     });
 }
+
+// Function to show form messages
+function showFormMessage(type, message) {
+    const formMessage = document.getElementById('formMessage');
+    if (!formMessage) return;
+    
+    // Clear and set message
+    formMessage.textContent = message;
+    formMessage.className = '';
+    formMessage.style.display = 'block';
+    
+    // Set styles based on type
+    if (type === 'success') {
+        formMessage.style.background = 'rgba(16, 185, 129, 0.1)';
+        formMessage.style.border = '1px solid #10b981';
+        formMessage.style.color = '#10b981';
+        formMessage.style.padding = '1rem';
+        formMessage.style.borderRadius = 'var(--border-radius)';
+    } else {
+        formMessage.style.background = 'rgba(239, 68, 68, 0.1)';
+        formMessage.style.border = '1px solid #ef4444';
+        formMessage.style.color = '#ef4444';
+        formMessage.style.padding = '1rem';
+        formMessage.style.borderRadius = 'var(--border-radius)';
+    }
+    
+    // Auto-hide success message after 5 seconds
+    if (type === 'success') {
+        setTimeout(() => {
+            formMessage.style.display = 'none';
+        }, 5000);
+    }
+}
+
+// Optional: Add basic form validation
+contactForm?.addEventListener('input', function(e) {
+    const input = e.target;
+    if (input.hasAttribute('required') && input.value.trim() === '') {
+        input.style.borderColor = '#ef4444';
+    } else {
+        input.style.borderColor = '';
+    }
+});
 
 // Form validation on input
 const formInputs = document.querySelectorAll('#contactForm .form-control');
