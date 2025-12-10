@@ -64,6 +64,118 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
+        /* Certificate Modal */
+        .certificate-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .certificate-modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            position: relative;
+            border: 1px solid var(--card-border);
+            animation: scaleIn 0.3s ease;
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            background: var(--darker);
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .modal-header h3 {
+            color: var(--light);
+            font-size: 1.3rem;
+            margin: 0;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--gray);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-modal:hover {
+            color: var(--light);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-body {
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .certificate-image {
+            max-width: 100%;
+            max-height: 70vh;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .certificate-placeholder {
+            width: 600px;
+            height: 400px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .certificate-placeholder i {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.8;
+        }
+
+        .certificate-placeholder p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 80%;
+            margin: 0 auto;
+        }
+
         /* Loading Screen */
         #loading-screen {
             position: fixed;
@@ -1037,6 +1149,10 @@
                 top: 1rem;
                 right: 1rem;
             }
+            
+            .modal-content {
+                max-width: 95%;
+            }
         }
 
         @media (max-width: 768px) {
@@ -1080,6 +1196,16 @@
             .projects-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .certificate-placeholder {
+                width: 100%;
+                height: 300px;
+                padding: 1.5rem;
+            }
+            
+            .certificate-placeholder i {
+                font-size: 3rem;
+            }
         }
 
         @media (max-width: 576px) {
@@ -1106,10 +1232,35 @@
                 flex-direction: column;
                 text-align: center;
             }
+            
+            .modal-header {
+                padding: 1rem;
+            }
+            
+            .modal-body {
+                padding: 1rem;
+            }
         }
     </style>
 </head>
 <body data-theme="light">
+    <!-- Certificate Modal -->
+    <div class="certificate-modal" id="certificateModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Certificate</h3>
+                <button class="close-modal" id="closeModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="modalContent">
+                    <!-- Certificate image or placeholder will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Loading Screen -->
     <div id="loading-screen">
         <div class="loading-logo">Arbi Pacolli</div>
@@ -1175,7 +1326,7 @@
                     <div class="stat-icon">
                         <i class="fab fa-github"></i>
                     </div>
-                    <div class="stat-number" data-target="10">10</div>
+                    <div class="stat-number" data-target="10">0</div>
                     <div class="stat-label">GitHub Repos</div>
                 </div>
                 
@@ -1218,7 +1369,8 @@
                 <div class="about-photo fade-in">
                     <!-- Add your photo here -->
                     <div style="width:100%;height:100%;background:var(--gradient);display:flex;align-items:center;justify-content:center;color:white;font-size:1.2rem;font-weight:600;">
-                        <i class="fas fa-user-tie" style="font-size: 3rem;"></i>
+                        <img src="Profile/Profile Photo.png" 
+                            style="width:100%;height:100%;object-fit:cover;border-radius:0;">
                     </div>
                 </div>
                 <div class="about-content">
@@ -1332,7 +1484,7 @@
                     <p>Innovation & Problem Solving Achievement</p>
                     <span class="certificate-date">Awarded 2023</span>
                     <div class="certificate-actions">
-                        <button class="btn btn-primary view-certificate" onclick="viewCertificate('hackathon')">
+                        <button class="btn btn-primary view-certificate" onclick="viewCertificate('hackathon', 'Hackathon Award')">
                             <i class="fas fa-eye"></i> View Award
                         </button>
                     </div>
@@ -1347,7 +1499,7 @@
                     <p>Cisco Certified Network Associate - Introduction to Networks</p>
                     <span class="certificate-date">Completed 2024</span>
                     <div class="certificate-actions">
-                        <button class="btn btn-primary view-certificate" onclick="viewCertificate('ccna1')">
+                        <button class="btn btn-primary view-certificate" onclick="viewCertificate('ccna1', 'CCNA Level 1 Certificate')">
                             <i class="fas fa-eye"></i> View Certificate
                         </button>
                     </div>
@@ -1362,7 +1514,7 @@
                     <p>Cisco Certified Network Associate - Routing & Switching</p>
                     <span class="certificate-date">Completed 2024</span>
                     <div class="certificate-actions">
-                        <button class="btn btn-primary view-certificate" onclick="viewCertificate('ccna2')">
+                        <button class="btn btn-primary view-certificate" onclick="viewCertificate('ccna2', 'CCNA Level 2 Certificate')">
                             <i class="fas fa-eye"></i> View Certificate
                         </button>
                     </div>
@@ -1377,7 +1529,7 @@
                     <p>Cisco Certified Network Associate - Advanced Networking</p>
                     <span class="certificate-date">Completed 2024</span>
                     <div class="certificate-actions">
-                        <button class="btn btn-primary view-certificate" onclick="viewCertificate('ccna3')">
+                        <button class="btn btn-primary view-certificate" onclick="viewCertificate('ccna3', 'CCNA Level 3 Certificate')">
                             <i class="fas fa-eye"></i> View Certificate
                         </button>
                     </div>
@@ -1392,7 +1544,7 @@
                     <p>Web Development Fundamentals</p>
                     <span class="certificate-date">Completed 2024</span>
                     <div class="certificate-actions">
-                        <button class="btn btn-secondary view-certificate" onclick="viewCertificate('codinghour')">
+                        <button class="btn btn-secondary view-certificate" onclick="viewCertificate('codinghour', 'Coding Hour Certificate')">
                             <i class="fas fa-eye"></i> View Certificate
                         </button>
                     </div>
@@ -1407,7 +1559,7 @@
                     <p>Python Development & Automation</p>
                     <span class="certificate-date">Completed 2023</span>
                     <div class="certificate-actions">
-                        <button class="btn btn-secondary view-certificate" onclick="viewCertificate('python')">
+                        <button class="btn btn-secondary view-certificate" onclick="viewCertificate('python', 'Python Programming Certificate')">
                             <i class="fas fa-eye"></i> View Certificate
                         </button>
                     </div>
@@ -1581,10 +1733,10 @@
                 <a href="#contact">Contact</a>
             </div>
             <div class="social-links">
-                <a href="https://github.com/biTo24" class="social-link" aria-label="GitHub">
+                <a href="https://github.com/arbi-pacolli" class="social-link" aria-label="GitHub">
                     <i class="fab fa-github"></i>
                 </a>
-                <a href="https://www.linkedin.com/in/arbipacolli/" class="social-link" aria-label="LinkedIn">
+                <a href="www.linkedin.com/in/arbipacolli" class="social-link" aria-label="LinkedIn">
                     <i class="fab fa-linkedin-in"></i>
                 </a>
                 <a href="https://www.instagram.com/arbi_pcl/" class="social-link" aria-label="Instagram">
@@ -1595,223 +1747,302 @@
         </div>
     </footer>
     <script>
-       // Theme Toggle Functionality
-    const themeToggle = document.getElementById('themeToggle');
-    const themeIcon = themeToggle.querySelector('i');
-    const body = document.body;
-    
-            // Check for saved theme preference or default to light
-    const currentTheme = localStorage.getItem('theme') || 'light';
-    body.setAttribute('data-theme', currentTheme);
-    updateThemeIcon(currentTheme);
-    
-    themeToggle.addEventListener('click', () => {
-        const newTheme = body.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-        body.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-        updateThemeIcon(newTheme);
-    });
-    
-    function updateThemeIcon(theme) {
-        themeIcon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
-    }
-    
-    // Loading screen functionality
-    window.addEventListener('load', function() {
-        setTimeout(function() {
-            const loadingScreen = document.getElementById('loading-screen');
-            loadingScreen.classList.add('hidden');
-            setTimeout(() => loadingScreen.style.display = 'none', 800);
-        }, 1500);
-    });
-    
-// Contact Form Submission
-const contactForm = document.getElementById('contactForm');
-if (contactForm) {
-    contactForm.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        
-        const submitBtn = document.getElementById('submitBtn');
-        const originalText = submitBtn.innerHTML;
-        const formMessage = document.getElementById('formMessage');
-        
-        // Show loading state
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-        submitBtn.disabled = true;
-        
-        // Hide any previous messages
-        if (formMessage) {
-            formMessage.style.display = 'none';
-            formMessage.textContent = '';
-        }
-        
-        try {
-            // Create form data
-            const formData = new FormData(this);
+        // Certificate data with image URLs
+        const certificates = {
+            hackathon: {
+                title: "Hackathon Award",
+                image: "Certifications/Hackathon 112.jpeg",
+                type: "award"
+            },
+            ccna1: {
+                title: "CCNA Level 1 Certificate",
+                image: "Certifications/CCNA 1.jpeg",
+                type: "certificate"
+            },
+            ccna2: {
+                title: "CCNA Level 2 Certificate",
+                image: "Certifications/CCNA 2.jpeg",
+                type: "certificate"
+            },
+            ccna3: {
+                title: "CCNA Level 3 Certificate",
+                image: "Certifications/CCNA 3.jpeg",
+                type: "certificate"
+            },
+            codinghour: {
+                title: "Coding Hour Certificate",
+                image: "Certifications/Shkolla Digjitale.jpeg",
+                type: "certificate"
+            },
+            python: {
+                title: "Python Programming Certificate",
+                image: "Certifications/Py Training.jpeg",
+                type: "certificate"
+            }
+        };
+
+        // View Certificate Function
+        function viewCertificate(certId, certTitle) {
+            const modal = document.getElementById('certificateModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalContent = document.getElementById('modalContent');
             
-            // Send to Formspree
-            const response = await fetch(this.action, {
-                method: 'POST',
-                body: new URLSearchParams(formData),
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
-            });
+            // Set modal title
+            modalTitle.textContent = certTitle;
             
-            // Check response
-            const data = await response.json();
-            
-            if (response.ok && data.ok) {
-                // Success
-                showFormMessage('success', 'Thank you! Your message has been sent successfully. I\'ll get back to you soon.');
+            // Check if certificate exists
+            if (certificates[certId]) {
+                const cert = certificates[certId];
                 
-                // Reset form
-                contactForm.reset();
+                // Create certificate image
+                modalContent.innerHTML = `
+                    <img src="${cert.image}" alt="${cert.title}" class="certificate-image">
+                    <p style="text-align: center; margin-top: 1rem; color: var(--gray); font-size: 0.9rem;">
+                        ${cert.type === 'award' ? 'Award Certificate' : 'Professional Certificate'}
+                    </p>
+                `;
             } else {
-                // Show Formspree error if available
-                if (data.error) {
-                    throw new Error(data.error);
-                } else {
-                    throw new Error('Form submission failed');
-                }
+                // Show placeholder if certificate not found
+                modalContent.innerHTML = `
+                    <div class="certificate-placeholder">
+                        <i class="fas ${certId.includes('ccna') ? 'fa-certificate' : certId.includes('python') ? 'fab fa-python' : 'fa-trophy'}"></i>
+                        <p>${certTitle} - Image will be displayed here</p>
+                    </div>
+                `;
             }
             
-        } catch (error) {
-            // Show error message
-            console.error('Form error:', error);
-            showFormMessage('error', 'Sorry, there was an error sending your message. Please try again or email me directly at arbipacolli08@gmail.com');
-        } finally {
-            // Reset button
-            submitBtn.innerHTML = originalText;
-            submitBtn.disabled = false;
+            // Show modal
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
-    });
-}
 
-// Function to show form messages
-function showFormMessage(type, message) {
-    const formMessage = document.getElementById('formMessage');
-    if (!formMessage) return;
-    
-    // Clear and set message
-    formMessage.textContent = message;
-    formMessage.className = '';
-    formMessage.style.display = 'block';
-    
-    // Set styles based on type
-    if (type === 'success') {
-        formMessage.style.background = 'rgba(16, 185, 129, 0.1)';
-        formMessage.style.border = '1px solid #10b981';
-        formMessage.style.color = '#10b981';
-        formMessage.style.padding = '1rem';
-        formMessage.style.borderRadius = 'var(--border-radius)';
-    } else {
-        formMessage.style.background = 'rgba(239, 68, 68, 0.1)';
-        formMessage.style.border = '1px solid #ef4444';
-        formMessage.style.color = '#ef4444';
-        formMessage.style.padding = '1rem';
-        formMessage.style.borderRadius = 'var(--border-radius)';
-    }
-    
-    // Auto-hide success message after 5 seconds
-    if (type === 'success') {
-        setTimeout(() => {
-            formMessage.style.display = 'none';
-        }, 5000);
-    }
-}
+        // Close Modal Function
+        function closeCertificateModal() {
+            const modal = document.getElementById('certificateModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
 
-// Optional: Add basic form validation
-contactForm?.addEventListener('input', function(e) {
-    const input = e.target;
-    if (input.hasAttribute('required') && input.value.trim() === '') {
-        input.style.borderColor = '#ef4444';
-    } else {
-        input.style.borderColor = '';
-    }
-});
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeCertificateModal();
+            }
+        });
 
-// Form validation on input
-const formInputs = document.querySelectorAll('#contactForm .form-control');
-formInputs.forEach(input => {
-    input.addEventListener('blur', function() {
-        if (this.value.trim() === '' && this.hasAttribute('required')) {
-            this.style.borderColor = '#ef4444';
-        } else {
-            this.style.borderColor = '';
+        // Close modal when clicking outside
+        document.getElementById('certificateModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeCertificateModal();
+            }
+        });
+
+        // Close modal button
+        document.getElementById('closeModal').addEventListener('click', closeCertificateModal);
+
+        // Animated Counter Function
+        function animateCounter(element, target) {
+            let current = 0;
+            const increment = target / 100;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = target;
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current);
+                }
+            }, 20);
         }
-    });
-});
-    
-    // Validation
-    function validateForm(data) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    
-        if (!data.name) {
-            showNotification('Please enter your name', 'error');
-            return false;
+
+        // Initialize counters when stats come into view
+        function initCounters() {
+            const statNumbers = document.querySelectorAll('.stat-number');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const target = parseInt(entry.target.getAttribute('data-target'));
+                        animateCounter(entry.target, target);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            statNumbers.forEach(stat => observer.observe(stat));
         }
-    
-        if (!data.email || !emailRegex.test(data.email)) {
-            showNotification('Please enter a valid email address', 'error');
-            return false;
+
+        // Theme Toggle Functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        const body = document.body;
+        
+        // Check for saved theme preference or default to light
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        body.setAttribute('data-theme', currentTheme);
+        updateThemeIcon(currentTheme);
+        
+        themeToggle.addEventListener('click', () => {
+            const newTheme = body.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+        
+        function updateThemeIcon(theme) {
+            themeIcon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
         }
-    
-        if (!data.message || data.message.length < 10) {
-            showNotification('Please enter a message with at least 10 characters', 'error');
-            return false;
+        
+        // Loading screen functionality
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const loadingScreen = document.getElementById('loading-screen');
+                loadingScreen.classList.add('hidden');
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                    // Initialize counters after loading
+                    initCounters();
+                }, 800);
+            }, 1500);
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenuBtn.querySelector('i').className = 
+                navLinks.classList.contains('active') ? 'fas fa-times' : 'fas fa-bars';
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                mobileMenuBtn.querySelector('i').className = 'fas fa-bars';
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Form submission
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            contactForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const submitBtn = document.getElementById('submitBtn');
+                const originalText = submitBtn.innerHTML;
+                const formMessage = document.getElementById('formMessage');
+                
+                // Show loading state
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+                submitBtn.disabled = true;
+                
+                // Hide any previous messages
+                if (formMessage) {
+                    formMessage.style.display = 'none';
+                    formMessage.textContent = '';
+                }
+                
+                try {
+                    // Create form data
+                    const formData = new FormData(this);
+                    
+                    // Send to Formspree
+                    const response = await fetch(this.action, {
+                        method: 'POST',
+                        body: new URLSearchParams(formData),
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        }
+                    });
+                    
+                    // Check response
+                    const data = await response.json();
+                    
+                    if (response.ok && data.ok) {
+                        // Success
+                        showFormMessage('success', 'Thank you! Your message has been sent successfully. I\'ll get back to you soon.');
+                        
+                        // Reset form
+                        contactForm.reset();
+                    } else {
+                        // Show Formspree error if available
+                        if (data.error) {
+                            throw new Error(data.error);
+                        } else {
+                            throw new Error('Form submission failed');
+                        }
+                    }
+                    
+                } catch (error) {
+                    // Show error message
+                    console.error('Form error:', error);
+                    showFormMessage('error', 'Sorry, there was an error sending your message. Please try again or email me directly at arbipacolli08@gmail.com');
+                } finally {
+                    // Reset button
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }
+            });
         }
-    
-        return true;
-    }
-    
-    // Notifications
-    function showNotification(message, type) {
-        const existingNotification = document.querySelector('.form-notification');
-        if (existingNotification) existingNotification.remove();
-    
-        const notification = document.createElement('div');
-        notification.className = `form-notification ${type}`;
-        notification.innerHTML = `
-            <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
-            <span>${message}</span>
-        `;
-        notification.style.cssText = `
-            position: fixed;
-            top: 100px;
-            right: 2rem;
-            background: ${type === 'success' ? '#10b981' : '#ef4444'};
-            color: white;
-            padding: 1rem 1.5rem;
-            border-radius: var(--border-radius);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            z-index: 10000;
-            box-shadow: var(--shadow);
-            animation: slideInRight 0.3s ease;
-        `;
-        document.body.appendChild(notification);
-    
-        setTimeout(() => {
-            notification.style.animation = 'slideOutRight 0.3s ease';
-            setTimeout(() => notification.remove(), 300);
-        }, 5000);
-    }
-    
-    // Button reset
-    function resetButton(button, originalHTML) {
-        button.innerHTML = originalHTML;
-        button.disabled = false;
-    }
-    
-    // Optional simulate API call (unused now)
-    // function simulateAPICall(data) {
-    //     return new Promise((resolve, reject) => {
-    //         setTimeout(() => Math.random() > 0.1 ? resolve(data) : reject(new Error('Network error')), 1500);
-    //     });
-    // }
+
+        // Function to show form messages
+        function showFormMessage(type, message) {
+            const formMessage = document.getElementById('formMessage');
+            if (!formMessage) return;
+            
+            // Clear and set message
+            formMessage.textContent = message;
+            formMessage.className = '';
+            formMessage.style.display = 'block';
+            
+            // Set styles based on type
+            if (type === 'success') {
+                formMessage.style.background = 'rgba(16, 185, 129, 0.1)';
+                formMessage.style.border = '1px solid #10b981';
+                formMessage.style.color = '#10b981';
+            } else {
+                formMessage.style.background = 'rgba(239, 68, 68, 0.1)';
+                formMessage.style.border = '1px solid #ef4444';
+                formMessage.style.color = '#ef4444';
+            }
+            
+            // Auto-hide success message after 5 seconds
+            if (type === 'success') {
+                setTimeout(() => {
+                    formMessage.style.display = 'none';
+                }, 5000);
+            }
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
     </script>
 
     <!--Start of Tawk.to Script-->
