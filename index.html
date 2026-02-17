@@ -82,6 +82,7 @@
             transition: background 0.3s, color 0.2s;
             overflow-x: hidden;
             width: 100%;
+            cursor: default;
         }
 
         .container {
@@ -93,7 +94,78 @@
             width: 100%;
         }
 
-        /* ===== ANIMATED CYBER GRID – YOUR VIBE ===== */
+        /* ===== PING LOADING ANIMATION ===== */
+        .ping-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--mono);
+            color: var(--accent);
+            font-size: 1.2rem;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        
+        .ping-loader.fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .ping-terminal {
+            background: var(--surface);
+            border: 2px solid var(--accent);
+            border-radius: 12px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
+        
+        .ping-line {
+            margin: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .ping-prompt {
+            color: var(--accent);
+            font-weight: 600;
+        }
+        
+        .ping-text {
+            color: var(--text-soft);
+        }
+        
+        .ping-cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.2rem;
+            background: var(--accent);
+            margin-left: 0.3rem;
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        .ping-result {
+            color: var(--accent);
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px dashed var(--accent);
+        }
+
+        /* ===== ANIMATED CYBER GRID ===== */
         .cyber-grid {
             position: fixed;
             top: 0;
@@ -115,7 +187,7 @@
             100% { background-position: 45px 45px; }
         }
 
-        /* floating particles (js generated) */
+        /* floating particles */
         .particle {
             position: fixed;
             width: 6px;
@@ -134,7 +206,101 @@
             100% { transform: translateY(-120vh) translateX(20vw); }
         }
 
-        /* ===== HEADER – BOLD, STICKY, TOUCH-FRIENDLY ===== */
+        /* ===== NETWORK GRAPH BACKGROUND ===== */
+        .network-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+        
+        .network-bg canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* ===== PACKET TRAVEL SCROLL INDICATOR ===== */
+        .packet-scroll {
+            position: fixed;
+            right: 20px;
+            top: 0;
+            width: 4px;
+            height: 100vh;
+            background: var(--border);
+            z-index: 90;
+            pointer-events: none;
+        }
+        
+        .packet {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 20px var(--accent);
+            transition: top 0.1s linear;
+            pointer-events: none;
+            z-index: 91;
+        }
+        
+        .packet::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 24px;
+            height: 24px;
+            background: var(--accent-soft);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulse-ring 2s infinite;
+        }
+        
+        @keyframes pulse-ring {
+            0% { width: 12px; height: 12px; opacity: 0.8; }
+            100% { width: 36px; height: 36px; opacity: 0; }
+        }
+
+        /* ===== DATA FLOW CURSOR TRAIL ===== */
+        .cursor-trail {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            mix-blend-mode: screen;
+            transition: transform 0.1s;
+            box-shadow: 0 0 20px var(--accent);
+        }
+        
+        .trail-particle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9997;
+            opacity: 0.5;
+            filter: blur(1px);
+            animation: trailFade 1s forwards;
+        }
+        
+        @keyframes trailFade {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(0); opacity: 0; }
+        }
+
+        /* ===== HEADER ===== */
         header {
             position: sticky;
             top: 0;
@@ -271,7 +437,7 @@
             color: #0c0f1c;
         }
 
-        /* ===== BUTTONS – BOUNCE, ENERGY, TOUCH OPTIMIZED ===== */
+        /* ===== BUTTONS ===== */
         .btn {
             display: inline-flex;
             align-items: center;
@@ -287,7 +453,7 @@
             position: relative;
             overflow: hidden;
             z-index: 1;
-            min-height: 48px; /* touch friendly */
+            min-height: 48px;
         }
 
         .btn::before {
@@ -330,7 +496,41 @@
             box-shadow: 0 10px 25px var(--accent-glow);
         }
 
-        /* ===== HERO – BIG, BOLD, RESPONSIVE ===== */
+        /* ===== CLI TERMINAL TYPING TEXT ===== */
+        .cli-text {
+            font-family: var(--mono);
+            background: var(--surface);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent);
+            margin: 1rem 0;
+            font-size: 1rem;
+        }
+        
+        .cli-prompt {
+            color: var(--accent);
+            margin-right: 0.5rem;
+        }
+        
+        .cli-command {
+            color: var(--text-soft);
+        }
+        
+        .cli-cursor {
+            display: inline-block;
+            width: 8px;
+            height: 1.2rem;
+            background: var(--accent);
+            margin-left: 0.2rem;
+            vertical-align: middle;
+            animation: blink 1s infinite;
+        }
+        
+        .typing-text {
+            display: inline-block;
+        }
+
+        /* ===== HERO ===== */
         .hero {
             padding: 4rem 0 2.5rem;
             position: relative;
@@ -379,9 +579,10 @@
             max-width: 550px;
         }
 
+        /* ===== SIGNAL STRENGTH STATS (Wi-Fi Bars) ===== */
         .hero-stats {
             display: flex;
-            gap: 1.8rem;
+            gap: 2rem;
             margin-top: 2rem;
             padding-top: 1.8rem;
             border-top: 2px dashed var(--accent);
@@ -417,6 +618,34 @@
             margin-top: 0.3rem;
             font-weight: 600;
         }
+        
+        /* Wi-Fi signal bars */
+        .signal-bars {
+            display: flex;
+            align-items: flex-end;
+            gap: 4px;
+            height: 30px;
+            margin-top: 5px;
+        }
+        
+        .signal-bar {
+            width: 8px;
+            background: var(--accent);
+            border-radius: 4px 4px 0 0;
+            transition: height 0.3s ease;
+            opacity: 0.3;
+        }
+        
+        .signal-bar.filled {
+            opacity: 1;
+            box-shadow: 0 0 10px var(--accent);
+        }
+        
+        .bar-1 { height: 8px; }
+        .bar-2 { height: 14px; }
+        .bar-3 { height: 20px; }
+        .bar-4 { height: 26px; }
+        .bar-5 { height: 32px; }
 
         /* ===== PROFILE PHOTO CARD ===== */
         .hero-card {
@@ -471,7 +700,7 @@
             margin-bottom: 1rem;
         }
 
-        /* ===== TILT CARD BASE STYLES – DISABLED ON MOBILE FOR PERFORMANCE ===== */
+        /* ===== TILT CARD BASE STYLES ===== */
         .tilt-card {
             transform-style: preserve-3d;
             perspective: 1200px;
@@ -479,7 +708,7 @@
             will-change: transform;
         }
 
-        /* ===== ABOUT – CONFIDENT, CLEAN ===== */
+        /* ===== ABOUT ===== */
         .about-section,
         .experience-section,
         .skills-section,
@@ -532,7 +761,7 @@
             flex-shrink: 0;
         }
 
-        /* ===== SKILLS – INTERACTIVE TAG CLOUD, TOUCH FRIENDLY ===== */
+        /* ===== SKILLS – WITH HOVER-EXPAND NETWORK TOOLS ===== */
         .skills-category {
             margin-bottom: 2.5rem;
         }
@@ -572,6 +801,7 @@
             position: relative;
             transform-style: preserve-3d;
             perspective: 800px;
+            overflow: hidden;
         }
 
         .skill-tag:hover {
@@ -581,8 +811,40 @@
             box-shadow: 0 10px 20px var(--accent-glow);
             color: var(--accent);
         }
+        
+        /* Hover-expand network tools */
+        .skill-tag[data-tool] {
+            position: relative;
+        }
+        
+        .skill-tag[data-tool]::before {
+            content: attr(data-tool);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-10px);
+            background: var(--surface);
+            color: var(--accent);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            border: 2px solid var(--accent);
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.2s;
+            font-family: var(--mono);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 10;
+        }
+        
+        .skill-tag[data-tool]:hover::before {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(-5px);
+        }
 
-        /* ===== EXPERIENCE – TIMELINE, RESPONSIVE ===== */
+        /* ===== EXPERIENCE ===== */
         .timeline {
             display: flex;
             flex-direction: column;
@@ -657,7 +919,7 @@
             flex-shrink: 0;
         }
 
-        /* ===== PROJECTS – CARDS, RESPONSIVE GRID ===== */
+        /* ===== PROJECTS ===== */
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -750,7 +1012,52 @@
             gap: 1rem;
         }
 
-        /* ===== CERTIFICATIONS – GRID, RESPONSIVE ===== */
+        /* ===== OSI MODEL / PROTOCOL HOVER CARDS ===== */
+        .osi-card {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .osi-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--accent-soft) 0%, transparent 100%);
+            opacity: 0;
+            transition: 0.3s;
+            z-index: 0;
+        }
+        
+        .osi-card:hover::before {
+            opacity: 1;
+        }
+        
+        .osi-layer {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            color: var(--accent);
+            background: var(--surface);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            border: 1px solid var(--accent);
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: 0.3s;
+            z-index: 2;
+        }
+        
+        .osi-card:hover .osi-layer {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== PULSING CERTIFICATION BADGES ===== */
         .certs-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -792,7 +1099,20 @@
             color: var(--accent);
             font-size: 1.7rem;
             margin-bottom: 1rem;
+            animation: softPulse 3s infinite;
         }
+        
+        @keyframes softPulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); text-shadow: 0 0 10px var(--accent); }
+        }
+        
+        .cert-card:nth-child(2) i { animation-delay: 0.5s; }
+        .cert-card:nth-child(3) i { animation-delay: 1s; }
+        .cert-card:nth-child(4) i { animation-delay: 1.5s; }
+        .cert-card:nth-child(5) i { animation-delay: 2s; }
+        .cert-card:nth-child(6) i { animation-delay: 2.5s; }
+        .cert-card:nth-child(7) i { animation-delay: 3s; }
 
         .cert-title {
             font-weight: 700;
@@ -827,7 +1147,7 @@
             word-break: break-word;
         }
 
-        /* ===== CONTACT – CLEAN, NO PHONE, RESPONSIVE ===== */
+        /* ===== CONTACT ===== */
         .contact-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -913,7 +1233,7 @@
             min-height: 100px;
         }
 
-        /* ===== FOOTER – RESPONSIVE ===== */
+        /* ===== FOOTER ===== */
         footer {
             padding: 3rem 0 2rem;
             border-top: 3px solid var(--accent);
@@ -945,7 +1265,7 @@
             transform: translateY(-6px) scale(1.15);
         }
 
-        /* ===== RESPONSIVE DESIGN – TABLETS & PHONES (NO COLOR CHANGES) ===== */
+        /* ===== RESPONSIVE DESIGN ===== */
         @media (max-width: 1100px) {
             .container { padding: 0 1.8rem; }
             .hero-grid { gap: 2rem; }
@@ -1017,7 +1337,6 @@
             
             .social-links { justify-content: center; }
             
-            /* Disable 3D tilt on mobile for performance & better UX */
             .tilt-card {
                 transform: none !important;
                 transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s !important;
@@ -1029,6 +1348,14 @@
             
             .hero-card { transform: rotate(0deg); }
             .hero-card:hover { transform: scale(1.02); }
+
+            .network-bg {
+                opacity: 0.15;
+            }
+            
+            .packet-scroll {
+                display: none;
+            }
         }
 
         @media (max-width: 600px) {
@@ -1144,7 +1471,6 @@
             }
         }
 
-        /* Fix for very small devices */
         .project-tech span,
         .skill-tag,
         .cert-date,
@@ -1155,9 +1481,56 @@
     </style>
 </head>
 <body data-theme="dark">
+    <!-- PING LOADING ANIMATION -->
+    <div class="ping-loader" id="pingLoader">
+        <div class="ping-terminal">
+            <div class="ping-line">
+                <span class="ping-prompt">$</span>
+                <span class="ping-text">ping -c 4 arbi-pacolli.dev</span>
+            </div>
+            <div class="ping-line">
+                <span class="ping-prompt">></span>
+                <span class="ping-text">PING arbi-pacolli.dev (127.0.0.1)</span>
+            </div>
+            <div class="ping-line">
+                <span class="ping-prompt">></span>
+                <span class="ping-text">64 bytes from localhost: icmp_seq=1 ttl=64 time=0.02ms</span>
+            </div>
+            <div class="ping-line">
+                <span class="ping-prompt">></span>
+                <span class="ping-text">64 bytes from localhost: icmp_seq=2 ttl=64 time=0.01ms</span>
+            </div>
+            <div class="ping-line">
+                <span class="ping-prompt">></span>
+                <span class="ping-text">64 bytes from localhost: icmp_seq=3 ttl=64 time=0.01ms</span>
+            </div>
+            <div class="ping-line">
+                <span class="ping-prompt">></span>
+                <span class="ping-text">64 bytes from localhost: icmp_seq=4 ttl=64 time=0.02ms</span>
+                <span class="ping-cursor"></span>
+            </div>
+            <div class="ping-result">
+                --- arbi-pacolli.dev ping statistics ---
+                <br>4 packets transmitted, 4 received, 0% packet loss
+            </div>
+        </div>
+    </div>
+
     <!-- animated background elements -->
     <div class="cyber-grid"></div>
     <div id="particle-container"></div>
+    
+    <!-- NETWORK GRAPH BACKGROUND -->
+    <div class="network-bg">
+        <canvas id="networkCanvas"></canvas>
+    </div>
+    
+    <!-- PACKET TRAVEL SCROLL INDICATOR -->
+    <div class="packet-scroll">
+        <div class="packet" id="scrollPacket"></div>
+    </div>
+    
+    <!-- CURSOR TRAIL ELEMENTS (added via JS) -->
 
     <header>
         <div class="container">
@@ -1189,7 +1562,7 @@
     </header>
 
     <main>
-        <!-- HERO – YOUR NAME, YOUR ENERGY, YOUR PHOTO -->
+        <!-- HERO – WITH CLI TYPING TEXT -->
         <section id="home" class="hero">
             <div class="container">
                 <div class="hero-grid">
@@ -1198,6 +1571,15 @@
                             Arbi <span class="hero-accent">Pacolli</span>
                         </h1>
                         <div class="hero-sub">IT & Network · Builder · Creator</div>
+                        
+                        <!-- CLI TYPING TEXT -->
+                        <div class="cli-text">
+                            <span class="cli-prompt">$</span>
+                            <span class="cli-command">whoami</span>
+                            <span class="cli-cursor"></span>
+                            <div class="typing-text" id="typingText"></div>
+                        </div>
+                        
                         <p class="hero-description">
                             CCNA-certified, IT intern, and developer. I make networks smarter and tools that actually help.
                         </p>
@@ -1210,32 +1592,55 @@
                             </a>
                         </div>
 
-                        <!-- STATS – ANIMATED -->
+                        <!-- STATS – WITH SIGNAL STRENGTH BARS -->
                         <div class="hero-stats">
                             <div class="stat-item">
                                 <span class="stat-number" data-target="3">0</span>
                                 <span class="stat-label">CCNA levels</span>
+                                <div class="signal-bars" data-value="3" data-max="3">
+                                    <div class="signal-bar bar-1"></div>
+                                    <div class="signal-bar bar-2"></div>
+                                    <div class="signal-bar bar-3"></div>
+                                </div>
                             </div>
                             <div class="stat-item">
                                 <span class="stat-number" data-target="6">0</span>
                                 <span class="stat-label">projects</span>
+                                <div class="signal-bars" data-value="6" data-max="6">
+                                    <div class="signal-bar bar-1"></div>
+                                    <div class="signal-bar bar-2"></div>
+                                    <div class="signal-bar bar-3"></div>
+                                    <div class="signal-bar bar-4"></div>
+                                    <div class="signal-bar bar-5"></div>
+                                </div>
                             </div>
                             <div class="stat-item">
                                 <span class="stat-number" data-target="7">0</span>
                                 <span class="stat-label">certifications</span>
+                                <div class="signal-bars" data-value="7" data-max="7">
+                                    <div class="signal-bar bar-1"></div>
+                                    <div class="signal-bar bar-2"></div>
+                                    <div class="signal-bar bar-3"></div>
+                                    <div class="signal-bar bar-4"></div>
+                                    <div class="signal-bar bar-5"></div>
+                                </div>
                             </div>
                             <div class="stat-item">
                                 <span class="stat-number" data-target="3">0</span>
                                 <span class="stat-label">internships</span>
+                                <div class="signal-bars" data-value="3" data-max="3">
+                                    <div class="signal-bar bar-1"></div>
+                                    <div class="signal-bar bar-2"></div>
+                                    <div class="signal-bar bar-3"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- RIGHT CARD – PROFILE PHOTO + BOLD STATEMENT -->
+                    <!-- RIGHT CARD – PROFILE PHOTO -->
                     <div class="fade-up">
                         <div class="hero-card tilt-card" id="heroProfileCard">
                             <div class="profile-image">
-                                <!-- Replace this src with your actual profile photo path -->
                                 <img src="Profile/Profile Photo.png" alt="Arbi Pacolli">
                             </div>
                             <h3 style="font-size: 1.7rem; margin-bottom: 0.8rem;">network + code</h3>
@@ -1310,8 +1715,8 @@
                 </div>
             
                 <div class="timeline fade-up">
-                    <!-- IT & TECHNICAL INTERNSHIP – 2025 (most recent) -->
-                    <div class="timeline-item tilt-card" id="exp1Card">
+                    <!-- IT & TECHNICAL INTERNSHIP – 2025 -->
+                    <div class="timeline-item tilt-card osi-card" id="exp1Card">
                         <div class="timeline-date">June – Aug 2025</div>
                         <div class="timeline-content">
                             <h4>IT and Technical Intern</h4>
@@ -1322,10 +1727,11 @@
                                 <li><i class="fas fa-chevron-right"></i> Installed security camera systems with remote access configuration</li>
                             </ul>
                         </div>
+                        <span class="osi-layer">Layer 8: User Support</span>
                     </div>
 
                     <!-- DUAL INTERNSHIPS – 2024 -->
-                    <div class="timeline-item tilt-card" id="exp2Card">
+                    <div class="timeline-item tilt-card osi-card" id="exp2Card">
                         <div class="timeline-date">July – Aug 2024</div>
                         <div class="timeline-content">
                             <h4>Intern Social Media Manager</h4>
@@ -1335,9 +1741,10 @@
                                 <li><i class="fas fa-chevron-right"></i> Analytics tracking and campaign optimization</li>
                             </ul>
                         </div>
+                        <span class="osi-layer">Layer 7: Application</span>
                     </div>
                 
-                    <div class="timeline-item tilt-card" id="exp3Card">
+                    <div class="timeline-item tilt-card osi-card" id="exp3Card">
                         <div class="timeline-date">July – Aug 2024</div>
                         <div class="timeline-content">
                             <h4>Intern Developer</h4>
@@ -1347,12 +1754,13 @@
                                 <li><i class="fas fa-chevron-right"></i> Applied development skills to internal tools</li>
                             </ul>
                         </div>
+                        <span class="osi-layer">Layer 7: Development</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- SKILLS – TAG CLOUD, INTERACTIVE -->
+        <!-- SKILLS – WITH HOVER-EXPAND NETWORK TOOLS -->
         <section id="skills" class="skills-section">
             <div class="container">
                 <div class="section-header fade-up">
@@ -1362,50 +1770,50 @@
                 <div class="skills-category fade-up">
                     <h3><i class="fas fa-network-wired"></i> Networking & Security</h3>
                     <div class="skill-tags">
-                        <span class="skill-tag tilt-card">Cisco IOS</span>
-                        <span class="skill-tag tilt-card">VLANs</span>
-                        <span class="skill-tag tilt-card">OSPF</span>
-                        <span class="skill-tag tilt-card">ACLs</span>
-                        <span class="skill-tag tilt-card">NAT</span>
-                        <span class="skill-tag tilt-card">VPN</span>
-                        <span class="skill-tag tilt-card">Wireshark</span>
-                        <span class="skill-tag tilt-card">Packet Tracer</span>
-                        <span class="skill-tag tilt-card">Firewalls</span>
-                        <span class="skill-tag tilt-card">Camera systems</span>
+                        <span class="skill-tag tilt-card" data-tool="Cisco IOS - CLI Expert">Cisco IOS</span>
+                        <span class="skill-tag tilt-card" data-tool="Virtual LANs - 802.1Q">VLANs</span>
+                        <span class="skill-tag tilt-card" data-tool="Open Shortest Path First">OSPF</span>
+                        <span class="skill-tag tilt-card" data-tool="Access Control Lists">ACLs</span>
+                        <span class="skill-tag tilt-card" data-tool="Network Address Translation">NAT</span>
+                        <span class="skill-tag tilt-card" data-tool="Virtual Private Networks">VPN</span>
+                        <span class="skill-tag tilt-card" data-tool="Packet Analysis">Wireshark</span>
+                        <span class="skill-tag tilt-card" data-tool="Network Simulation">Packet Tracer</span>
+                        <span class="skill-tag tilt-card" data-tool="Firewall Rules">Firewalls</span>
+                        <span class="skill-tag tilt-card" data-tool="IP Camera Setup">Camera systems</span>
                     </div>
                 </div>
 
                 <div class="skills-category fade-up">
                     <h3><i class="fas fa-code"></i> Development</h3>
                     <div class="skill-tags">
-                        <span class="skill-tag tilt-card">Python</span>
-                        <span class="skill-tag tilt-card">JavaScript (ES6+)</span>
-                        <span class="skill-tag tilt-card">Java</span>
-                        <span class="skill-tag tilt-card">HTML5/CSS3</span>
-                        <span class="skill-tag tilt-card">Bootstrap</span>
-                        <span class="skill-tag tilt-card">Django</span>
-                        <span class="skill-tag tilt-card">FastAPI</span>
-                        <span class="skill-tag tilt-card">REST APIs</span>
+                        <span class="skill-tag tilt-card" data-tool="Python 3.x - Automation">Python</span>
+                        <span class="skill-tag tilt-card" data-tool="ES6+ - React">JavaScript (ES6+)</span>
+                        <span class="skill-tag tilt-card" data-tool="Java - OOP">Java</span>
+                        <span class="skill-tag tilt-card" data-tool="Semantic HTML5">HTML5/CSS3</span>
+                        <span class="skill-tag tilt-card" data-tool="Responsive Framework">Bootstrap</span>
+                        <span class="skill-tag tilt-card" data-tool="Python Web Framework">Django</span>
+                        <span class="skill-tag tilt-card" data-tool="Async API Framework">FastAPI</span>
+                        <span class="skill-tag tilt-card" data-tool="RESTful Design">REST APIs</span>
                     </div>
                 </div>
 
                 <div class="skills-category fade-up">
                     <h3><i class="fas fa-tools"></i> Tools & IT</h3>
                     <div class="skill-tags">
-                        <span class="skill-tag tilt-card">Git/GitHub</span>
-                        <span class="skill-tag tilt-card">Linux</span>
-                        <span class="skill-tag tilt-card">VS Code</span>
-                        <span class="skill-tag tilt-card">AWS (basics)</span>
-                        <span class="skill-tag tilt-card">Modem config</span>
-                        <span class="skill-tag tilt-card">CCTV setup</span>
-                        <span class="skill-tag tilt-card">Docker</span>
-                        <span class="skill-tag tilt-card">Nmap</span>
+                        <span class="skill-tag tilt-card" data-tool="Version Control">Git/GitHub</span>
+                        <span class="skill-tag tilt-card" data-tool="Ubuntu/CentOS">Linux</span>
+                        <span class="skill-tag tilt-card" data-tool="IDE - Extensions">VS Code</span>
+                        <span class="skill-tag tilt-card" data-tool="EC2/S3 Basics">AWS (basics)</span>
+                        <span class="skill-tag tilt-card" data-tool="Router Configuration">Modem config</span>
+                        <span class="skill-tag tilt-card" data-tool="Surveillance Setup">CCTV setup</span>
+                        <span class="skill-tag tilt-card" data-tool="Containerization">Docker</span>
+                        <span class="skill-tag tilt-card" data-tool="Network Scanner">Nmap</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- PROJECTS – YOUR WORK, IMPACT (NO USER/PLAY NUMBERS) -->
+        <!-- PROJECTS – YOUR WORK, IMPACT -->
         <section id="projects" class="projects-section">
             <div class="container">
                 <div class="section-header fade-up">
@@ -1413,7 +1821,7 @@
                 </div>
 
                 <div class="projects-grid fade-up">
-                    <a href="https://github.com/biTo24/CyberShield" target="_blank" class="project-card tilt-card">
+                    <a href="https://github.com/biTo24/CyberShield" target="_blank" class="project-card tilt-card osi-card">
                         <div class="project-header">
                             <i class="fas fa-shield-halbed"></i>
                             <span style="color: var(--accent); font-weight: 700;">live →</span>
@@ -1432,9 +1840,10 @@
                         <span class="project-link">
                             View project <i class="fas fa-arrow-right"></i>
                         </span>
+                        <span class="osi-layer">Layer 7: Security</span>
                     </a>
 
-                    <a href="https://github.com/biTo24/Web-Scraping" target="_blank" class="project-card tilt-card">
+                    <a href="https://github.com/biTo24/Web-Scraping" target="_blank" class="project-card tilt-card osi-card">
                         <div class="project-header">
                             <i class="fas fa-spider"></i>
                             <span style="color: var(--accent); font-weight: 700;">code →</span>
@@ -1453,9 +1862,10 @@
                         <span class="project-link">
                             View code <i class="fas fa-arrow-right"></i>
                         </span>
+                        <span class="osi-layer">Layer 7: Data Collection</span>
                     </a>
 
-                    <a href="https://flapmaster.netlify.app/" target="_blank" class="project-card tilt-card">
+                    <a href="https://flapmaster.netlify.app/" target="_blank" class="project-card tilt-card osi-card">
                         <div class="project-header">
                             <i class="fas fa-gamepad"></i>
                             <span style="color: var(--accent); font-weight: 700;">play →</span>
@@ -1473,12 +1883,13 @@
                         <span class="project-link">
                             Play demo <i class="fas fa-arrow-right"></i>
                         </span>
+                        <span class="osi-layer">Layer 6: Presentation</span>
                     </a>
                 </div>
             </div>
         </section>
         
-        <!-- CERTIFICATIONS – GRID, PROOF -->
+        <!-- CERTIFICATIONS – WITH PULSING BADGES -->
         <section id="certifications" class="cert-section">
             <div class="container">
                 <div class="section-header fade-up">
@@ -1601,11 +2012,21 @@
         (function() {
             'use strict';
 
-            // ========== 1. FLOATING PARTICLES ==========
+            // ========== PING LOADING ANIMATION ==========
+            setTimeout(() => {
+                const loader = document.getElementById('pingLoader');
+                if (loader) {
+                    loader.classList.add('fade-out');
+                    setTimeout(() => {
+                        loader.style.display = 'none';
+                    }, 500);
+                }
+            }, 2500);
+
+            // ========== FLOATING PARTICLES ==========
             function createParticles() {
                 const container = document.getElementById('particle-container');
                 if (!container) return;
-                // Reduce particles on mobile for performance
                 const particleCount = window.innerWidth < 600 ? 20 : 45;
                 for (let i = 0; i < particleCount; i++) {
                     const particle = document.createElement('div');
@@ -1621,7 +2042,7 @@
                 }
             }
 
-            // ========== 2. THEME TOGGLE ==========
+            // ========== THEME TOGGLE ==========
             const themeToggle = document.getElementById('themeToggle');
             const body = document.body;
             const themeIcon = themeToggle.querySelector('i');
@@ -1640,9 +2061,12 @@
                 const newTheme = current === 'dark' ? 'light' : 'dark';
                 body.setAttribute('data-theme', newTheme);
                 themeIcon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+                
+                // Update signal bars color (they'll update via CSS variable)
+                // Network graph will update in next frame
             });
 
-            // ========== 3. MOBILE MENU ==========
+            // ========== MOBILE MENU ==========
             const menuBtn = document.getElementById('menuBtn');
             const navLinks = document.getElementById('navLinks');
             
@@ -1664,7 +2088,7 @@
                 });
             });
 
-            // ========== 4. ACTIVE NAVIGATION SCROLL SPY ==========
+            // ========== ACTIVE NAVIGATION SCROLL SPY ==========
             const sections = document.querySelectorAll('section[id]');
             const navItems = document.querySelectorAll('.nav-links a');
 
@@ -1688,7 +2112,7 @@
             window.addEventListener('scroll', updateActiveNav);
             window.addEventListener('load', updateActiveNav);
 
-            // ========== 5. FADE-UP ON SCROLL ==========
+            // ========== FADE-UP ON SCROLL ==========
             const fadeElements = document.querySelectorAll('.fade-up');
             const fadeObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -1700,7 +2124,7 @@
 
             fadeElements.forEach(el => fadeObserver.observe(el));
 
-            // ========== 6. ANIMATED COUNTERS ==========
+            // ========== ANIMATED COUNTERS WITH SIGNAL BARS ==========
             const statNumbers = document.querySelectorAll('.stat-number');
             
             function animateCounters() {
@@ -1720,6 +2144,21 @@
                         }
                     }, 25);
                 });
+                
+                // Fill signal bars based on values
+                document.querySelectorAll('.signal-bars').forEach(barGroup => {
+                    const value = parseInt(barGroup.getAttribute('data-value'), 10);
+                    const max = parseInt(barGroup.getAttribute('data-max'), 10) || 5;
+                    const bars = barGroup.querySelectorAll('.signal-bar');
+                    
+                    bars.forEach((bar, index) => {
+                        if (index < value) {
+                            bar.classList.add('filled');
+                        } else {
+                            bar.classList.remove('filled');
+                        }
+                    });
+                });
             }
 
             const heroObserver = new IntersectionObserver((entries) => {
@@ -1734,7 +2173,7 @@
             const heroSection = document.querySelector('#home');
             if (heroSection) heroObserver.observe(heroSection);
 
-            // ========== 7. CONTACT FORM ==========
+            // ========== CONTACT FORM ==========
             const contactForm = document.getElementById('contactForm');
             if (contactForm) {
                 contactForm.addEventListener('submit', async function(e) {
@@ -1769,7 +2208,7 @@
                 });
             }
 
-            // ========== 8. SMOOTH SCROLL ==========
+            // ========== SMOOTH SCROLL ==========
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
                     const href = this.getAttribute('href');
@@ -1785,9 +2224,8 @@
                 });
             });
 
-            // ========== 9. UNIVERSAL 3D TILT EFFECT – DISABLED ON MOBILE ==========
+            // ========== 3D TILT EFFECT ==========
             function initTiltEffect() {
-                // Disable tilt on mobile and tablets (touch devices)
                 if (window.innerWidth <= 900) return;
                 
                 const tiltElements = document.querySelectorAll('.tilt-card');
@@ -1812,11 +2250,9 @@
                 });
             }
 
-            // Initialize tilt effect
             window.addEventListener('load', initTiltEffect);
             window.addEventListener('resize', function() {
                 if (window.innerWidth <= 900) {
-                    // Reset transforms on mobile
                     document.querySelectorAll('.tilt-card').forEach(card => {
                         card.style.transform = '';
                     });
@@ -1825,10 +2261,10 @@
                 }
             });
 
-            // ========== 10. INIT PARTICLES ==========
+            // ========== INIT PARTICLES ==========
             createParticles();
 
-            // ========== 11. CLOSE MOBILE MENU ON RESIZE ==========
+            // ========== CLOSE MOBILE MENU ON RESIZE ==========
             window.addEventListener('resize', function() {
                 if (window.innerWidth > 900 && navLinks.classList.contains('active')) {
                     navLinks.classList.remove('active');
@@ -1836,7 +2272,218 @@
                 }
             });
 
-            console.log('Arbi Pacolli — fully responsive portfolio, colors unchanged, looks great on all devices!');
+            // ========== NETWORK GRAPH BACKGROUND ==========
+            function initNetworkGraph() {
+                const canvas = document.getElementById('networkCanvas');
+                if (!canvas) return;
+                
+                const ctx = canvas.getContext('2d');
+                let width, height;
+                let nodes = [];
+                const nodeCount = 25;
+                
+                class Node {
+                    constructor() {
+                        this.x = Math.random();
+                        this.y = Math.random();
+                        this.vx = (Math.random() - 0.5) * 0.002;
+                        this.vy = (Math.random() - 0.5) * 0.002;
+                        this.radius = Math.random() * 3 + 2;
+                    }
+                    
+                    update() {
+                        this.x += this.vx;
+                        this.y += this.vy;
+                        
+                        if (this.x <= 0 || this.x >= 1) this.vx *= -1;
+                        if (this.y <= 0 || this.y >= 1) this.vy *= -1;
+                    }
+                }
+                
+                for (let i = 0; i < nodeCount; i++) {
+                    nodes.push(new Node());
+                }
+                
+                function resize() {
+                    width = window.innerWidth;
+                    height = window.innerHeight;
+                    canvas.width = width;
+                    canvas.height = height;
+                }
+                
+                function draw() {
+                    if (!ctx) return;
+                    
+                    ctx.clearRect(0, 0, width, height);
+                    
+                    const isDark = document.body.getAttribute('data-theme') === 'dark';
+                    const accentColor = isDark ? '#00e5ff' : '#0284c7';
+                    
+                    // Draw connections
+                    for (let i = 0; i < nodes.length; i++) {
+                        for (let j = i + 1; j < nodes.length; j++) {
+                            const nodeA = nodes[i];
+                            const nodeB = nodes[j];
+                            
+                            const dx = (nodeA.x - nodeB.x) * width;
+                            const dy = (nodeA.y - nodeB.y) * height;
+                            const distance = Math.sqrt(dx * dx + dy * dy);
+                            
+                            const maxDistance = 200;
+                            if (distance < maxDistance) {
+                                const opacity = 1 - (distance / maxDistance);
+                                ctx.beginPath();
+                                ctx.moveTo(nodeA.x * width, nodeA.y * height);
+                                ctx.lineTo(nodeB.x * width, nodeB.y * height);
+                                ctx.strokeStyle = `${accentColor}${Math.floor(opacity * 40).toString(16).padStart(2, '0')}`;
+                                ctx.stroke();
+                            }
+                        }
+                    }
+                    
+                    // Draw nodes
+                    nodes.forEach(node => {
+                        node.update();
+                        
+                        ctx.shadowColor = accentColor;
+                        ctx.shadowBlur = 15;
+                        
+                        ctx.beginPath();
+                        ctx.arc(node.x * width, node.y * height, node.radius, 0, Math.PI * 2);
+                        ctx.fillStyle = accentColor;
+                        ctx.fill();
+                        
+                        ctx.shadowBlur = 5;
+                        ctx.beginPath();
+                        ctx.arc(node.x * width, node.y * height, node.radius * 0.6, 0, Math.PI * 2);
+                        ctx.fillStyle = '#ffffff';
+                        ctx.fill();
+                        
+                        ctx.shadowBlur = 0;
+                    });
+                    
+                    requestAnimationFrame(draw);
+                }
+                
+                window.addEventListener('resize', resize);
+                resize();
+                draw();
+            }
+
+            // ========== CLI TYPING TEXT ==========
+            const typingElement = document.getElementById('typingText');
+            if (typingElement) {
+                const phrases = [
+                    '> arbi@network:~$ Arbi Pacolli',
+                    '> arbi@network:~$ CCNA · IT Intern',
+                    '> arbi@network:~$ Network Builder',
+                    '> arbi@network:~$ Python Developer',
+                    '> arbi@network:~$ Automation Enthusiast'
+                ];
+                let phraseIndex = 0;
+                let charIndex = 0;
+                let isDeleting = false;
+                
+                function typeEffect() {
+                    const currentPhrase = phrases[phraseIndex];
+                    
+                    if (isDeleting) {
+                        typingElement.textContent = currentPhrase.substring(0, charIndex - 1);
+                        charIndex--;
+                    } else {
+                        typingElement.textContent = currentPhrase.substring(0, charIndex + 1);
+                        charIndex++;
+                    }
+                    
+                    if (!isDeleting && charIndex === currentPhrase.length) {
+                        isDeleting = true;
+                        setTimeout(typeEffect, 2000);
+                    } else if (isDeleting && charIndex === 0) {
+                        isDeleting = false;
+                        phraseIndex = (phraseIndex + 1) % phrases.length;
+                        setTimeout(typeEffect, 500);
+                    } else {
+                        setTimeout(typeEffect, isDeleting ? 50 : 100);
+                    }
+                }
+                
+                setTimeout(typeEffect, 1000);
+            }
+
+            // ========== PACKET TRAVEL SCROLL INDICATOR ==========
+            const packet = document.getElementById('scrollPacket');
+            if (packet) {
+                function updatePacketPosition() {
+                    const scrollPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+                    const packetPos = scrollPercent * 100;
+                    packet.style.top = `${packetPos}%`;
+                    requestAnimationFrame(updatePacketPosition);
+                }
+                updatePacketPosition();
+            }
+
+            // ========== DATA FLOW CURSOR TRAIL ==========
+            const trailContainer = document.createElement('div');
+            trailContainer.className = 'cursor-trail-container';
+            document.body.appendChild(trailContainer);
+            
+            let mouseX = 0, mouseY = 0;
+            let trailX = 0, trailY = 0;
+            
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                
+                // Create trail particle
+                if (Math.random() > 0.7) { // Throttle particles
+                    const particle = document.createElement('div');
+                    particle.className = 'trail-particle';
+                    particle.style.left = mouseX + 'px';
+                    particle.style.top = mouseY + 'px';
+                    document.body.appendChild(particle);
+                    
+                    setTimeout(() => {
+                        particle.remove();
+                    }, 1000);
+                }
+            });
+            
+            // Smooth cursor follower
+            const cursor = document.createElement('div');
+            cursor.className = 'cursor-trail';
+            document.body.appendChild(cursor);
+            
+            function animateCursor() {
+                trailX += (mouseX - trailX) * 0.2;
+                trailY += (mouseY - trailY) * 0.2;
+                
+                cursor.style.left = trailX - 4 + 'px';
+                cursor.style.top = trailY - 4 + 'px';
+                
+                requestAnimationFrame(animateCursor);
+            }
+            animateCursor();
+
+            // ========== INITIALIZE EVERYTHING ==========
+            window.addEventListener('load', () => {
+                initNetworkGraph();
+                initTiltEffect();
+                
+                // Update signal bars after counters
+                setTimeout(() => {
+                    document.querySelectorAll('.signal-bars').forEach(barGroup => {
+                        const value = parseInt(barGroup.getAttribute('data-value'), 10);
+                        const bars = barGroup.querySelectorAll('.signal-bar');
+                        bars.forEach((bar, index) => {
+                            if (index < value) {
+                                bar.classList.add('filled');
+                            }
+                        });
+                    });
+                }, 1500);
+            });
+
+            console.log('Arbi Pacolli — all effects added! Network graph, CLI typing, signal bars, OSI cards, 3D tilt, packet scroll, cursor trail, pulsing certs, hover-expand tools, ping loader');
         })();
     </script>
 </body>
