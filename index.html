@@ -908,6 +908,105 @@
             padding-left: 0.8rem;
         }
 
+        /* ===== NEW: certificate button + popup ===== */
+        .cert-btn {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition-base);
+            margin-top: 0.8rem;
+            align-self: center;
+            width: fit-content;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .cert-btn i {
+            font-size: 0.8rem;
+        }
+        .cert-btn:hover {
+            background: var(--accent);
+            color: #0c0f1c;
+            transform: scale(1.05);
+        }
+
+        /* popup overlay */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.2s ease, visibility 0.2s;
+        }
+        .popup-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        .popup-card {
+            background: var(--surface);
+            border: 2px solid var(--accent);
+            border-radius: 28px;
+            max-width: 90vw;
+            max-height: 90vh;
+            width: fit-content;
+            padding: 2rem 2rem 1.8rem 2rem;
+            position: relative;
+            box-shadow: 0 0 40px var(--accent-glow);
+            text-align: center;
+        }
+        .popup-close {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            background: var(--accent-soft);
+            border: none;
+            color: var(--accent);
+            font-size: 1.6rem;
+            line-height: 1;
+            cursor: pointer;
+            padding: 0 8px 6px 8px;
+            border-radius: 40px;
+            transition: var(--transition-base);
+            font-weight: 400;
+            border: 2px solid transparent;
+        }
+        .popup-close:hover {
+            background: var(--accent);
+            color: #0c0f1c;
+            border-color: var(--accent);
+            transform: scale(1.1);
+        }
+        .popup-image {
+            max-width: 600px;
+            max-height: 60vh;
+            width: auto;
+            height: auto;
+            border-radius: 18px;
+            border: 3px solid var(--accent);
+            box-shadow: 0 10px 30px var(--accent-glow);
+            margin-top: 0.5rem;
+        }
+        .popup-caption {
+            margin-top: 1rem;
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
         /* ===== CONTACT ===== */
         .contact-grid {
             display: grid;
@@ -1413,8 +1512,9 @@
                         </div>
                         <div class="education-title">Hackathon Award</div>
                         <div class="education-issuer">Innovation Award 2023</div>
-                        <span class="education-date">2023</span>
+                        <span class="education-date">Nov 2023</span>
                         <div class="education-desc">Built IDS prototype, panel choice winner</div>
+                        <button class="cert-btn" data-cert="🏆 Hackathon Award 2023 · IDS prototype"><i class="fas fa-certificate"></i> Show certificate</button>
                     </div>
                     <div class="education-card">
                         <div class="education-image">
@@ -1422,8 +1522,9 @@
                         </div>
                         <div class="education-title">CCNAv7: Intro to Networks</div>
                         <div class="education-issuer">Cisco</div>
-                        <span class="education-date">2024</span>
+                        <span class="education-date"> Feb 2024</span>
                         <div class="education-desc">VLANs, static routing, switch security</div>
+                        <button class="cert-btn" data-cert="📜 CCNAv7 Intro to Networks · Cisco · Feb 2024"><i class="fas fa-certificate"></i> Show certificate</button>
                     </div>
                     <div class="education-card">
                         <div class="education-image">
@@ -1431,8 +1532,9 @@
                         </div>
                         <div class="education-title">CCNA: SRWE</div>
                         <div class="education-issuer">Cisco</div>
-                        <span class="education-date">2024</span>
+                        <span class="education-date">Mar 2024</span>
                         <div class="education-desc">OSPF, EtherChannel, STP, wireless</div>
+                        <button class="cert-btn" data-cert="📜 CCNA SRWE · Cisco · Mar 2024"><i class="fas fa-certificate"></i> Show certificate</button>
                     </div>
                     <div class="education-card">
                         <div class="education-image">
@@ -1440,8 +1542,9 @@
                         </div>
                         <div class="education-title">CCNA: ENSA</div>
                         <div class="education-issuer">Cisco</div>
-                        <span class="education-date">2024</span>
+                        <span class="education-date"> Mar 2024</span>
                         <div class="education-desc">ACLs, NAT, VPN, QoS, network design</div>
+                        <button class="cert-btn" data-cert="📜 CCNA ENSA · Cisco · Mar 2024"><i class="fas fa-certificate"></i> Show certificate</button>
                     </div>
                     <div class="education-card">
                         <div class="education-image">
@@ -1449,8 +1552,9 @@
                         </div>
                         <div class="education-title">Coding Hour</div>
                         <div class="education-issuer">Shkolla Digjitale</div>
-                        <span class="education-date">2024</span>
+                        <span class="education-date">Feb 2024</span>
                         <div class="education-desc">Web development fundamentals</div>
+                        <button class="cert-btn" data-cert="💻 Coding Hour certificate · Shkolla Digjitale"><i class="fas fa-certificate"></i> Show certificate</button>
                     </div>
                     <div class="education-card">
                         <div class="education-image">
@@ -1458,17 +1562,39 @@
                         </div>
                         <div class="education-title">Python Programming</div>
                         <div class="education-issuer">R . I . T Institution</div>
-                        <span class="education-date">2025</span>
+                        <span class="education-date">Apr 2025</span>
                         <div class="education-desc">Automation, scripts, log analysis</div>
+                        <button class="cert-btn" data-cert="🐍 Python for Automation · RIT Institution"><i class="fas fa-certificate"></i> Show certificate</button>
                     </div>
                     <div class="education-card">
                         <div class="education-image">
-                            <img src="https://logo.clearbit.com/arduino.cc" alt="Arduino" onerror="this.src='https://via.placeholder.com/70x70/00e5ff/0c0f1c?text=A'">
+                            <img src="https://logo.clearbit.com/developers.google.com" alt="GDG Prishtina" onerror="this.src='https://via.placeholder.com/70x70/4285F4/ffffff?text=GDG'">
+                        </div>
+                        <div class="education-title">Frontend Efficiency & Scaling Teams</div>
+                        <div class="education-issuer">GDG Prishtina - DevFest Kosova</div>
+                        <span class="education-date">Dec 2025</span>
+                        <div class="education-desc">Remix, SSR, and scalable frontend</div>
+                        <button class="cert-btn" data-cert="🎨 DevFest 2025 · GDG Prishtina"><i class="fas fa-certificate"></i> Show certificate</button>
+                    </div>
+                    <div class="education-card">
+                        <div class="education-image">
+                        <img src="https://logo.clearbit.com/arduino.cc" alt="Arduino" onerror="this.src='https://via.placeholder.com/70x70/00e5ff/0c0f1c?text=A'">
                         </div>
                         <div class="education-title">Academy of Makers</div>
                         <div class="education-issuer">Bonevet Prishtina</div>
                         <span class="education-date">Ongoing</span>
                         <div class="education-desc">CAD, 3D, Arduino, circuit design, MVP pitching</div>
+                        <button class="cert-btn" data-cert="⚡ Academy of Makers · Bonevet"><i class="fas fa-certificate"></i> Show certificate</button>
+                    </div>
+                    <div class="education-card">
+                        <div class="education-image">
+                            <img src="https://logo.clearbit.com/rit.edu" alt="RIT Kosovo" alt="RIT Kosovo" onerror="this.src='https://via.placeholder.com/70x70/00e5ff/0c0f1c?text=RIT'">
+                        </div>
+                        <div class="education-title">International Cybersecurity Defense Challenge</div>
+                        <div class="education-issuer">RIT Kosovo & Iowa State University</div>
+                        <span class="education-date">February 2026</span>
+                        <div class="education-desc">Blue Team defensive security competition</div>
+                        <button class="cert-btn" data-cert="🛡️ Cybersecurity Challenge · RIT Kosovo 2026"><i class="fas fa-certificate"></i> Show certificate</button>
                     </div>
                 </div>
             </div>
@@ -1673,6 +1799,15 @@
             </div>
         </div>
     </footer>
+
+    <!-- POPUP OVERLAY (shared) -->
+    <div class="popup-overlay" id="certPopup">
+        <div class="popup-card">
+            <button class="popup-close" id="popupClose">&times;</button>
+            <img src="" alt="certificate preview" class="popup-image" id="popupImage">
+            <div class="popup-caption" id="popupCaption"></div>
+        </div>
+    </div>
 
     <script>
         (function() {
@@ -2038,13 +2173,68 @@
                 animateCursor();
             }
 
+            // ========== POPUP FUNCTIONALITY (CERTIFICATE MODAL) ==========
+            const popup = document.getElementById('certPopup');
+            const popupImage = document.getElementById('popupImage');
+            const popupCaption = document.getElementById('popupCaption');
+            const popupClose = document.getElementById('popupClose');
+
+            // Object mapping certificate text to image paths
+            const certificateImages = {
+                '🏆 Hackathon Award 2023 · IDS prototype': 'Certifications/Hackathon 112.jpeg',
+                '📜 CCNAv7 Intro to Networks · Cisco · Feb 2024': 'Certifications/CCNA 1.jpeg',
+                '📜 CCNA SRWE · Cisco · Mar 2024': 'Certifications/CCNA 2.jpeg',
+                '📜 CCNA ENSA · Cisco · Mar 2024': 'Certifications/CCNA 3.jpeg',
+                '💻 Coding Hour certificate · Shkolla Digjitale': 'Certifications/Shkolla Digjitale.jpeg',
+                '🐍 Python for Automation · RIT Institution': 'Certifications/Py Training.jpeg',
+                '🎨 DevFest 2025 · GDG Prishtina': 'Certifications/Workshop  Frontend Efficiency & Scaling Teams.png',
+                '⚡ Academy of Makers · Bonevet': 'Certifications/Bonevet Training.jpeg',
+                '🛡️ Cybersecurity Challenge · RIT Kosovo 2026': 'Certifications/Internatioinal Cybersecurity Defense Challenge.jpeg'
+            };
+
+            // Default fallback image
+            const defaultCert = 'images/certificates/default.jpg';
+
+            document.querySelectorAll('.cert-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const certText = btn.getAttribute('data-cert') || 'Certificate of achievement';
+
+                    // Use specific image if available, otherwise fallback
+                    popupImage.src = certificateImages[certText] || defaultCert;
+                    popupCaption.textContent = certText;
+                    popup.classList.add('active');
+                });
+            });
+
+            function closePopup() {
+                popup.classList.remove('active');
+            }
+
+            if (popupClose) {
+                popupClose.addEventListener('click', closePopup);
+            }
+
+            if (popup) {
+                popup.addEventListener('click', (e) => {
+                    if (e.target === popup) closePopup();
+                });
+            }
+
+            // ESC key closes popup
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && popup && popup.classList.contains('active')) {
+                    closePopup();
+                }
+            });
+
             // ========== INIT ==========
             window.addEventListener('load', () => {
                 initNetworkGraph();
                 initTiltEffect();
             });
 
-            console.log('Arbi Pacolli — polished portfolio with optimized effects');
+            console.log('Arbi Pacolli — polished portfolio with certificate popup');
         })();
     </script>
 </body>
