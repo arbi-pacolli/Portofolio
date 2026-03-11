@@ -34,7 +34,6 @@
             --font: 'Inter', sans-serif;
         }
 
-        /* light mode optional (toggle ready) */
         [data-theme="light"] {
             --bg: #f9fbfe;
             --bg-alt: #edf2f9;
@@ -199,18 +198,22 @@
             .nav-links { display: none; }
             .mobile-menu-btn { display: flex; }
             .mobile-nav-active {
-                display: flex;
+                display: flex !important;
                 flex-direction: column;
                 position: absolute;
                 top: 70px;
                 right: 0;
                 background: var(--surface);
-                width: 200px;
+                width: 220px;
                 padding: 2rem;
                 border-left: 4px solid var(--accent);
                 border-bottom: 4px solid var(--accent);
                 border-radius: 0 0 0 20px;
                 gap: 1rem;
+                z-index: 200;
+            }
+            .nav-links.mobile-nav-active {
+                display: flex;
             }
         }
 
@@ -516,7 +519,7 @@
         <div class="container">
             <nav class="navbar">
                 <a href="#home" class="logo">Arbi<span>Pacolli</span></a>
-                <ul class="nav-links">
+                <ul class="nav-links" id="navLinks">
                     <li><a href="#home" class="active">Home</a></li>
                     <li><a href="#about">About</a></li>
                     <li><a href="#tech">Focus</a></li>
@@ -533,7 +536,7 @@
     </header>
 
     <main>
-        <!-- HERO (exact content) -->
+        <!-- HERO -->
         <section id="home" class="hero">
             <div class="container">
                 <div class="hero-grid">
@@ -568,7 +571,7 @@
             </div>
         </section>
 
-        <!-- ABOUT (exact) -->
+        <!-- ABOUT -->
         <section id="about">
             <div class="container">
                 <h2>About Me</h2>
@@ -585,7 +588,7 @@
             </div>
         </section>
 
-        <!-- TECHNICAL FOCUS (grid) -->
+        <!-- TECHNICAL FOCUS -->
         <section id="tech">
             <div class="container">
                 <h2>Technical Focus</h2>
@@ -632,7 +635,12 @@
                     <div class="project-icon"><i class="fas fa-newspaper"></i></div>
                     <h3 class="project-title">Undetectable News Extraction System</h3>
                     <p class="project-desc">
-                        A Python-based system designed to collect news headlines from multiple online portals while minimizing detection by anti-scraping mechanisms. The system uses randomized request headers and controlled request timing. Extracted data is stored locally in structured CSV files and can be visualized through a simple desktop interface.
+                        A Python-based system designed to collect news headlines from
+                        multiple online portals while minimizing detection by
+                        anti-scraping mechanisms. The system uses randomized request
+                        headers and controlled request timing. Extracted data is stored
+                        locally in structured CSV files and can be visualized through a
+                        simple desktop interface.
                     </p>
                     <div class="project-tech">
                         <span>Python</span><span>BeautifulSoup</span><span>Requests</span><span>CSV</span><span>Tkinter</span>
@@ -672,7 +680,7 @@
             </div>
         </section>
 
-        <!-- CERTIFICATIONS (exact) -->
+        <!-- CERTIFICATIONS -->
         <section id="certs">
             <div class="container">
                 <h2>Certifications</h2>
@@ -706,8 +714,10 @@
                 <div class="contact-grid">
                     <div>
                         <p style="color: var(--text-soft); font-size: 1.1rem; margin-bottom: 2rem;">
-                            I am open to collaboration on networking, cybersecurity, and software development projects.
-                            If you are interested in working together or discussing technical ideas, feel free to reach out.
+                            I am open to collaboration on networking, cybersecurity,
+                            and software development projects. If you are interested in
+                            working together or discussing technical ideas, feel free
+                            to reach out.
                         </p>
                     </div>
                     <div class="contact-links">
@@ -729,7 +739,6 @@
         </div>
     </footer>
 
-    <!-- minimal script: theme toggle + mobile menu (optional) -->
     <script>
         (function() {
             // theme toggle
@@ -741,7 +750,7 @@
                 toggle.innerHTML = newTheme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
             });
 
-            // mobile menu (simple)
+            // mobile menu
             const menuBtn = document.getElementById('menuBtn');
             const nav = document.querySelector('.nav-links');
             menuBtn.addEventListener('click', () => {
@@ -764,6 +773,16 @@
                     link.classList.remove('active');
                     if (link.getAttribute('href') === `#${current}`) {
                         link.classList.add('active');
+                    }
+                });
+            });
+
+            // close mobile nav on link click
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (nav.classList.contains('mobile-nav-active')) {
+                        nav.classList.remove('mobile-nav-active');
+                        if(menuBtn) menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
                     }
                 });
             });
