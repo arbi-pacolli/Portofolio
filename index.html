@@ -16,40 +16,44 @@
     }
 
     :root {
-      --bg-deep: #0a0c12;
-      --bg-elevated: #11131c;
-      --surface: #181c28;
-      --border-dim: #252b3a;
-      --text-primary: #eef2ff;
-      --text-secondary: #9ca3cf;
-      --text-muted: #6b728e;
-      --accent-cyan: #22d3ee;
-      --accent-blue: #3b82f6;
-      --accent-glow: rgba(34, 211, 238, 0.2);
-      --radius-card: 1.75rem;
-      --radius-elem: 1rem;
-      --transition: all 0.2s ease;
+      --bg-deep: #0f1419;
+      --bg-elevated: rgba(255, 255, 255, 0.05);
+      --surface: rgba(255, 255, 255, 0.08);
+      --border-dim: rgba(255, 255, 255, 0.1);
+      --text-primary: #ffffff;
+      --text-secondary: rgba(255, 255, 255, 0.7);
+      --text-muted: rgba(255, 255, 255, 0.5);
+      --accent-cyan: #00d9ff;
+      --accent-blue: #0099ff;
+      --accent-glow: rgba(0, 217, 255, 0.2);
+      --radius-card: 2.5rem;
+      --radius-elem: 1.5rem;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     [data-theme="light"] {
-      --bg-deep: #f4f7fc;
-      --bg-elevated: #ffffff;
-      --surface: #ffffff;
-      --border-dim: #dce3ec;
+      --bg-deep: #f8f9fa;
+      --bg-elevated: rgba(255, 255, 255, 0.7);
+      --surface: rgba(255, 255, 255, 0.8);
+      --border-dim: rgba(0, 0, 0, 0.08);
       --text-primary: #0f172a;
-      --text-secondary: #334155;
-      --text-muted: #5b6e8c;
+      --text-secondary: rgba(15, 23, 42, 0.7);
+      --text-muted: rgba(15, 23, 42, 0.5);
       --accent-cyan: #0891b2;
       --accent-blue: #2563eb;
-      --accent-glow: rgba(8, 145, 178, 0.1);
+      --accent-glow: rgba(8, 145, 178, 0.15);
     }
 
     body {
       font-family: 'Inter', sans-serif;
-      background: var(--bg-deep);
+      background: linear-gradient(135deg, var(--bg-deep) 0%, #1a1f2e 100%);
+      background-attachment: fixed;
       color: var(--text-primary);
-      line-height: 1.5;
-      transition: background 0.2s, color 0.2s;
+      line-height: 1.6;
+      transition: background 0.3s, color 0.3s;
+    }
+    [data-theme="light"] body {
+      background: linear-gradient(135deg, var(--bg-deep) 0%, #e8f0f7 100%);
     }
 
     .container {
@@ -58,28 +62,28 @@
       padding: 0 1.8rem;
     }
 
-    /* header / navigation (clean minimal) */
+    /* header / navigation (glassy glassmorphism) */
     header {
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(10, 12, 18, 0.8);
-      backdrop-filter: blur(16px);
+      background: rgba(15, 20, 25, 0.7);
+      backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border-dim);
     }
     [data-theme="light"] header {
-      background: rgba(244, 247, 252, 0.85);
+      background: rgba(248, 249, 250, 0.7);
     }
     .navbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem 0;
+      padding: 1.2rem 0;
     }
     .logo {
-      font-weight: 700;
-      font-size: 1.5rem;
-      letter-spacing: -0.3px;
+      font-weight: 800;
+      font-size: 1.6rem;
+      letter-spacing: -0.5px;
       background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
       -webkit-background-clip: text;
       background-clip: text;
@@ -87,31 +91,46 @@
     }
     .nav-links {
       display: flex;
-      gap: 2rem;
+      gap: 2.5rem;
       list-style: none;
     }
     .nav-links a {
       text-decoration: none;
       font-weight: 500;
       color: var(--text-secondary);
-      transition: color 0.2s;
+      transition: var(--transition);
       font-size: 0.95rem;
+      position: relative;
     }
     .nav-links a:hover, .nav-links a.active {
       color: var(--accent-cyan);
+    }
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
+      border-radius: 1px;
     }
     .theme-toggle {
       background: var(--surface);
       border: 1px solid var(--border-dim);
       width: 40px;
       height: 40px;
-      border-radius: 40px;
+      border-radius: 50%;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       color: var(--accent-cyan);
-      transition: 0.2s;
+      transition: var(--transition);
+    }
+    .theme-toggle:hover {
+      background: rgba(255, 255, 255, 0.12);
+      transform: scale(1.05);
     }
     .mobile-menu-btn {
       display: none;
@@ -119,7 +138,7 @@
       border: 1px solid var(--border-dim);
       width: 40px;
       height: 40px;
-      border-radius: 40px;
+      border-radius: 50%;
       align-items: center;
       justify-content: center;
       cursor: pointer;
@@ -133,18 +152,19 @@
         position: absolute;
         top: 70px;
         right: 1rem;
-        background: var(--bg-elevated);
-        padding: 1.8rem;
-        border-radius: 1.5rem;
+        background: var(--surface);
+        backdrop-filter: blur(20px);
+        padding: 2rem;
+        border-radius: var(--radius-elem);
         border: 1px solid var(--border-dim);
-        width: 200px;
-        gap: 1.2rem;
+        width: 220px;
+        gap: 1.5rem;
         z-index: 200;
       }
     }
 
     section {
-      padding: 90px 0 80px;
+      padding: 100px 0 100px;
     }
 
     h1, h2, h3 {
@@ -152,241 +172,397 @@
       letter-spacing: -0.02em;
     }
     h2 {
-      font-size: 2.2rem;
-      margin-bottom: 2rem;
-      border-left: 4px solid var(--accent-cyan);
-      padding-left: 1rem;
+      font-size: 2.8rem;
+      margin-bottom: 3rem;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: 800;
     }
     .hero {
-      padding: 70px 0 60px;
+      padding: 80px 0 60px;
     }
     .hero-badge {
       display: inline-block;
-      background: var(--accent-glow);
-      padding: 0.2rem 1rem;
-      border-radius: 30px;
-      font-size: 0.8rem;
-      font-weight: 500;
+      background: var(--surface);
+      backdrop-filter: blur(10px);
+      padding: 0.6rem 1.4rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
       color: var(--accent-cyan);
-      margin-bottom: 1.2rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--border-dim);
+      transition: var(--transition);
+    }
+    .hero-badge:hover {
+      background: rgba(0, 217, 255, 0.1);
     }
     .hero-title {
-      font-size: clamp(2.5rem, 6vw, 4rem);
-      margin-bottom: 1rem;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
     }
     .hero-highlight {
-      color: var(--accent-cyan);
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
     .hero-desc {
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       color: var(--text-secondary);
-      max-width: 650px;
-      margin: 1.5rem 0;
+      max-width: 700px;
+      margin: 1.8rem 0;
+      line-height: 1.8;
     }
     .btn-group {
       display: flex;
       flex-wrap: wrap;
-      gap: 1rem;
-      margin-top: 1.5rem;
+      gap: 1.2rem;
+      margin-top: 2.5rem;
     }
     .btn-primary {
-      background: var(--accent-cyan);
-      color: #0a0c12;
-      padding: 0.7rem 1.8rem;
-      border-radius: 40px;
-      font-weight: 600;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+      color: #0f1419;
+      padding: 0.9rem 2rem;
+      border-radius: 50px;
+      font-weight: 700;
       text-decoration: none;
-      transition: 0.2s;
+      transition: var(--transition);
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.6rem;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(0, 217, 255, 0.25);
     }
     .btn-outline {
       border: 1px solid var(--border-dim);
-      background: transparent;
+      background: var(--surface);
+      backdrop-filter: blur(10px);
       color: var(--text-primary);
-      padding: 0.7rem 1.8rem;
-      border-radius: 40px;
-      font-weight: 500;
+      padding: 0.9rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
       text-decoration: none;
-      transition: 0.2s;
+      transition: var(--transition);
     }
-    .btn-outline:hover, .btn-primary:hover {
-      transform: translateY(-2px);
-      filter: brightness(1.05);
+    .btn-outline:hover {
+      background: rgba(0, 217, 255, 0.1);
+      border-color: var(--accent-cyan);
+      transform: translateY(-3px);
     }
 
     /* core areas grid */
     .core-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.8rem;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
       margin-top: 1rem;
     }
     .core-card {
-      background: var(--bg-elevated);
+      background: var(--surface);
+      backdrop-filter: blur(20px);
       border: 1px solid var(--border-dim);
       border-radius: var(--radius-elem);
-      padding: 1.8rem;
-      transition: 0.2s;
+      padding: 2.2rem;
+      transition: var(--transition);
     }
     .core-card:hover {
       border-color: var(--accent-cyan);
+      background: rgba(0, 217, 255, 0.05);
+      transform: translateY(-6px);
+      box-shadow: 0 8px 32px rgba(0, 217, 255, 0.1);
     }
     .core-icon {
-      font-size: 2rem;
+      font-size: 2.4rem;
       color: var(--accent-cyan);
-      margin-bottom: 1rem;
+      margin-bottom: 1.2rem;
     }
     .core-card h3 {
       font-size: 1.4rem;
-      margin-bottom: 1rem;
+      margin-bottom: 1.2rem;
+      color: var(--text-primary);
     }
     .core-list {
       list-style: none;
     }
     .core-list li {
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.8rem;
       color: var(--text-secondary);
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.6rem;
     }
     .core-list i {
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       color: var(--accent-cyan);
     }
 
     /* projects */
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 2rem;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 2.2rem;
       margin: 2rem 0;
     }
     .project-card {
-      background: var(--bg-elevated);
+      background: var(--surface);
+      backdrop-filter: blur(20px);
       border: 1px solid var(--border-dim);
       border-radius: var(--radius-card);
-      padding: 1.8rem;
-      transition: 0.2s;
+      padding: 2.2rem;
+      transition: var(--transition);
     }
     .project-card:hover {
       border-color: var(--accent-cyan);
-      transform: translateY(-4px);
+      background: rgba(0, 217, 255, 0.05);
+      transform: translateY(-8px);
+      box-shadow: 0 16px 48px rgba(0, 217, 255, 0.15);
     }
     .project-icon {
-      font-size: 2rem;
+      font-size: 2.6rem;
       color: var(--accent-cyan);
-      margin-bottom: 1rem;
+      margin-bottom: 1.2rem;
     }
     .project-title {
-      font-size: 1.4rem;
-      margin-bottom: 0.8rem;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+      font-weight: 700;
+    }
+    .project-card p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.7;
     }
     .tech-stack {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.5rem;
-      margin: 1rem 0;
+      gap: 0.6rem;
+      margin: 1.5rem 0 0;
     }
     .tech-stack span {
-      background: var(--accent-glow);
+      background: rgba(0, 217, 255, 0.1);
       color: var(--accent-cyan);
-      padding: 0.2rem 0.9rem;
-      border-radius: 30px;
-      font-size: 0.75rem;
-      font-weight: 500;
-    }
-
-    /* LABS SECTION (cybersecurity labs) */
-    .labs-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.8rem;
-      margin: 2rem 0;
-    }
-    .lab-card {
-      background: var(--surface);
-      border: 1px solid var(--border-dim);
-      border-radius: 1.5rem;
-      padding: 1.5rem;
-      transition: all 0.2s;
-    }
-    .lab-card:hover {
-      border-left: 3px solid var(--accent-cyan);
-      background: var(--bg-elevated);
-    }
-    .lab-title {
-      font-weight: 700;
-      font-size: 1.3rem;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      margin-bottom: 0.75rem;
-    }
-    .lab-tools {
-      font-family: 'JetBrains Mono', monospace;
+      padding: 0.4rem 1rem;
+      border-radius: 50px;
       font-size: 0.8rem;
-      background: var(--bg-deep);
-      display: inline-block;
-      padding: 0.2rem 0.7rem;
-      border-radius: 30px;
-      margin: 0.7rem 0;
-      color: var(--accent-cyan);
-    }
-    .lab-learn {
-      color: var(--text-secondary);
-      font-size: 0.9rem;
-      border-top: 1px dashed var(--border-dim);
-      padding-top: 0.7rem;
-      margin-top: 0.7rem;
-    }
-
-    /* tech stack organized */
-    .tech-stack-section {
-      background: var(--bg-elevated);
-      border-radius: 2rem;
+      font-weight: 600;
       border: 1px solid var(--border-dim);
-      padding: 2rem;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2rem;
+      transition: var(--transition);
     }
-    .stack-category h3 {
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-      color: var(--accent-cyan);
-    }
-    .stack-category ul {
-      list-style: none;
-    }
-    .stack-category li {
-      margin-bottom: 0.5rem;
-      color: var(--text-secondary);
-      font-size: 0.9rem;
+    .tech-stack span:hover {
+      background: rgba(0, 217, 255, 0.2);
+      border-color: var(--accent-cyan);
     }
 
     .about-text {
-      background: var(--bg-elevated);
+      background: var(--surface);
+      backdrop-filter: blur(20px);
       border-radius: 2rem;
-      padding: 2rem;
+      padding: 3rem;
       border: 1px solid var(--border-dim);
-      font-size: 1rem;
+      font-size: 1.05rem;
       color: var(--text-secondary);
+      line-height: 1.8;
+      transition: var(--transition);
+    }
+    .about-text:hover {
+      background: rgba(0, 217, 255, 0.05);
+      border-color: var(--accent-cyan);
     }
 
     footer {
       border-top: 1px solid var(--border-dim);
-      padding: 2rem 0;
+      padding: 3rem 0;
       text-align: center;
       color: var(--text-muted);
-      font-size: 0.85rem;
+      font-size: 0.9rem;
+      background: rgba(0, 0, 0, 0.2);
     }
+    footer a {
+      color: var(--accent-cyan);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+    footer a:hover {
+      color: var(--accent-blue);
+    }
+
     @media (max-width: 640px) {
-      .container { padding: 0 1.2rem; }
-      section { padding: 60px 0; }
+      .container { padding: 0 1.5rem; }
+      section { padding: 70px 0; }
+      h2 { font-size: 2rem; margin-bottom: 2rem; }
+    }
+
+    /* CERTIFICATIONS SECTION */
+    .certifications-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.8rem;
+      margin: 2rem 0;
+    }
+    .cert-card {
+      background: var(--surface);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border-dim);
+      border-radius: 1.2rem;
+      overflow: hidden;
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-height: 380px;
+    }
+    .cert-card:hover {
+      border-color: var(--accent-cyan);
+      transform: translateY(-8px);
+      box-shadow: 0 16px 48px rgba(0, 217, 255, 0.2);
+      background: rgba(0, 217, 255, 0.05);
+    }
+    .cert-image {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      display: block;
+      flex-shrink: 0;
+    }
+    .cert-info {
+      padding: 1.6rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .cert-info h4 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+    .cert-info p {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      flex-grow: 1;
+    }
+    .cert-cta {
+      margin-top: 1rem;
+      color: var(--accent-cyan);
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: var(--transition);
+    }
+    .cert-card:hover .cert-cta {
+      gap: 0.8rem;
+    }
+    .cert-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 217, 255, 0.05);
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-end;
+      padding: 1rem;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .cert-card:hover .cert-overlay {
+      opacity: 1;
+    }
+    .cert-overlay i {
+      color: var(--accent-cyan);
+      font-size: 1.5rem;
+    }
+
+    /* LIGHTBOX MODAL */
+    .lightbox {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(15, 20, 25, 0.8);
+      backdrop-filter: blur(12px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      animation: fadeIn 0.3s ease;
+    }
+    .lightbox.active {
+      display: flex;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; backdrop-filter: blur(0px); }
+      to { opacity: 1; backdrop-filter: blur(12px); }
+    }
+    @keyframes slideUp {
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .lightbox-content {
+      position: relative;
+      max-width: 90vw;
+      max-height: 90vh;
+      animation: slideUp 0.3s ease;
+    }
+    .lightbox-image {
+      max-width: 100%;
+      max-height: 80vh;
+      border-radius: 1.5rem;
+      display: block;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      width: 40px;
+      height: 40px;
+      background: var(--accent-cyan);
+      border: none;
+      border-radius: 50%;
+      color: #0f1419;
+      font-size: 1.3rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+      z-index: 1001;
+    }
+    .lightbox-close:hover {
+      transform: scale(1.1);
+      filter: brightness(0.9);
+    }
+    @media (max-width: 768px) {
+      .lightbox-close {
+        top: 10px;
+        right: 10px;
+        background: rgba(0, 217, 255, 0.9);
+      }
+      .lightbox-image {
+        max-height: 70vh;
+      }
+    }
+    .lightbox-name {
+      text-align: center;
+      color: var(--text-secondary);
+      margin-top: 1rem;
+      font-size: 0.95rem;
     }
   </style>
 </head>
@@ -397,11 +573,11 @@
       <div class="logo">// arbi.pacolli</div>
       <ul class="nav-links" id="navLinks">
         <li><a href="#home" class="active">home</a></li>
+        <li><a href="#about">about</a></li>
         <li><a href="#core">core</a></li>
         <li><a href="#projects">projects</a></li>
-        <li><a href="#labs">labs+practice</a></li>
-        <li><a href="#techstack">tech</a></li>
-        <li><a href="#about">about</a></li>
+        <li><a href="#certifications">certs</a></li>
+        <li><a href="#contact">contact</a></li>
       </ul>
       <div style="display: flex; gap: 0.8rem;">
         <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
@@ -421,6 +597,18 @@
       <div class="btn-group">
         <a href="#projects" class="btn-primary"><i class="fas fa-code"></i> See my work</a>
         <a href="#labs" class="btn-outline"><i class="fas fa-shield-alt"></i> Cybersecurity labs</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT (early section) -->
+  <section id="about">
+    <div class="container">
+      <h2>about me</h2>
+      <div class="about-text">
+        High school developer focused on <span style="color: var(--accent-cyan);">backend systems, automation, networking, and cybersecurity</span>. I build practical tools like data extraction systems and continuously improve through hands-on labs. <br><br>
+        I value <span style="color: var(--accent-cyan);">clean architecture</span>, understanding data flow across networks, and practicing security from a defensive perspective. Currently expanding my knowledge in infrastructure automation and security fundamentals. <br><br>
+        <i class="fas fa-arrow-right" style="color: var(--accent-cyan);"></i> <strong>Builder</strong> · technical foundation · growth path in cybersecurity
       </div>
     </div>
   </section>
@@ -473,7 +661,7 @@
   <!-- PROJECTS structured -->
   <section id="projects">
     <div class="container">
-      <h2>projects · backend & systems</h2>
+      <h2>projects</h2>
       <div class="projects-grid">
         <div class="project-card">
           <div class="project-icon"><i class="fas fa-newspaper"></i></div>
@@ -482,89 +670,205 @@
           <div class="tech-stack"><span>Python</span><span>BeautifulSoup</span><span>Requests</span><span>CSV</span></div>
         </div>
         <div class="project-card">
-          <div class="project-icon"><i class="fas fa-chart-line"></i></div>
-          <h3 class="project-title">Network Automation Toolkit</h3>
-          <p>Automation scripts for network device config backups, ping sweep tools, and basic log parsers using Python and Paramiko foundations.</p>
-          <div class="tech-stack"><span>Python</span><span>Netmiko</span><span>CLI</span></div>
+          <div class="project-icon"><i class="fas fa-shield-alt"></i></div>
+          <h3 class="project-title">Cyber Shield Hub</h3>
+          <p>Interactive cybersecurity learning platform featuring security concepts, vulnerability databases, and defensive strategies. Real-world threat analysis and protection techniques.</p>
+          <div class="tech-stack"><span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>Security</span></div>
         </div>
         <div class="project-card">
-          <div class="project-icon"><i class="fas fa-laptop-code"></i></div>
-          <h3 class="project-title">Portfolio & UI Experiments</h3>
-          <p>Modern responsive CV & web interfaces exploring subtle terminal aesthetics, dark UI, and interactive components.</p>
-          <div class="tech-stack"><span>HTML5</span><span>CSS3</span><span>JavaScript</span></div>
+          <div class="project-icon"><i class="fas fa-gamepad"></i></div>
+          <h3 class="project-title">Flapmaster Game</h3>
+          <p>Browser-based game project showcasing game mechanics, collision detection, and dynamic difficulty. Built with modern web technologies for smooth gameplay.</p>
+          <div class="tech-stack"><span>JavaScript</span><span>Canvas API</span><span>HTML5</span></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- NEW SECTION: LABS & PRACTICE (cybersecurity credibility) -->
-  <section id="labs">
+  <!-- CERTIFICATIONS SECTION -->
+  <section id="certifications">
     <div class="container">
-      <h2>labs & practice · cybersecurity foundation</h2>
-      <div class="labs-grid">
-        <div class="lab-card">
-          <div class="lab-title"><i class="fas fa-search"></i> Basic Network Scan</div>
-          <p>Used scanning techniques to identify open ports and running services on a test network (home lab environment).</p>
-          <div class="lab-tools"><i class="fas fa-tools"></i> Nmap, Zenmap</div>
-          <div class="lab-learn"><i class="fas fa-graduation-cap"></i> Learned how services become exposed, port states, and network mapping fundamentals.</div>
+      <h2>certifications & achievements</h2>
+      <div class="certifications-grid">
+        <div class="cert-card" onclick="openLightbox('Certifications/Hackathon 112.jpeg', 'Hackathon')">
+          <img src="Certifications/Hackathon 112.jpeg" alt="Hackathon" class="cert-image">
+          <div class="cert-overlay"><i class="fas fa-expand"></i></div>
+          <div class="cert-info">
+            <h4>Hackathon Competition</h4>
+            <p>Participated in intensive hackathon competition. Demonstrated rapid development and problem-solving skills under pressure.</p>
+            <div class="cert-cta"><i class="fas fa-arrow-right"></i> View Certificate</div>
+          </div>
         </div>
-        <div class="lab-card">
-          <div class="lab-title"><i class="fas fa-chart-simple"></i> Packet Analysis with Wireshark</div>
-          <p>Captured and analyzed live HTTP, DNS, and TCP handshake traffic in a controlled lab. Observed packet structure and flags.</p>
-          <div class="lab-tools"><i class="fas fa-tools"></i> Wireshark, tcpdump</div>
-          <div class="lab-learn"><i class="fas fa-graduation-cap"></i> Understood packet headers, TCP streams, and basic anomaly detection.</div>
+        <div class="cert-card" onclick="openLightbox('Certifications/CCNA 1.jpeg', 'CCNA 1')">
+          <img src="Certifications/CCNA 1.jpeg" alt="CCNA 1" class="cert-image">
+          <div class="cert-overlay"><i class="fas fa-expand"></i></div>
+          <div class="cert-info">
+            <h4>CCNA 1</h4>
+            <p>Introduction to Networks - Cisco Certified Network Associate training. Mastered networking fundamentals, protocols, and device configuration.</p>
+            <div class="cert-cta"><i class="fas fa-arrow-right"></i> View Certificate</div>
+          </div>
         </div>
-        <div class="lab-card">
-          <div class="lab-title"><i class="fas fa-skull"></i> TryHackMe: Pre Security & Intro</div>
-          <p>Completed "Pre Security" learning path — networking basics, web fundamentals, and security principles.</p>
-          <div class="lab-tools"><i class="fas fa-tools"></i> TryHackMe, Linux CLI</div>
-          <div class="lab-learn"><i class="fas fa-graduation-cap"></i> Core security concepts, attack surface awareness, responsible lab ethics.</div>
+        <div class="cert-card" onclick="openLightbox('Certifications/CCNA 2.jpeg', 'CCNA 2')">
+          <img src="Certifications/CCNA 2.jpeg" alt="CCNA 2" class="cert-image">
+          <div class="cert-overlay"><i class="fas fa-expand"></i></div>
+          <div class="cert-info">
+            <h4>CCNA 2</h4>
+            <p>Switching, Routing, and Wireless Essentials. Advanced network configuration and security protocols implementation.</p>
+            <div class="cert-cta"><i class="fas fa-arrow-right"></i> View Certificate</div>
+          </div>
         </div>
-        <div class="lab-card">
-          <div class="lab-title"><i class="fas fa-shield-hawk"></i> Basic Vulnerability Testing</div>
-          <p>Practiced with OWASP Juice Shop (sandbox) — identified basic misconfigurations and logged simple findings.</p>
-          <div class="lab-tools"><i class="fas fa-tools"></i> Burp Suite (basic), DevTools</div>
-          <div class="lab-learn"><i class="fas fa-graduation-cap"></i> Learned how insecure design can lead to data exposure and the importance of input validation.</div>
+        <div class="cert-card" onclick="openLightbox('Certifications/CCNA 3.jpeg', 'CCNA 3')">
+          <img src="Certifications/CCNA 3.jpeg" alt="CCNA 3" class="cert-image">
+          <div class="cert-overlay"><i class="fas fa-expand"></i></div>
+          <div class="cert-info">
+            <h4>CCNA 3</h4>
+            <p>Enterprise Networking, Security, and Automation. Enterprise-level network design and implementation expertise.</p>
+            <div class="cert-cta"><i class="fas fa-arrow-right"></i> View Certificate</div>
+          </div>
         </div>
-      </div>
-      <p style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--text-muted); text-align: center;">⚡ Every lab is documented for continuous learning — building cybersecurity knowledge step by step.</p>
-    </div>
-  </section>
-
-  <!-- TECH STACK (organized properly) -->
-  <section id="techstack">
-    <div class="container">
-      <h2>tech stack</h2>
-      <div class="tech-stack-section">
-        <div class="stack-category"><h3><i class="fas fa-code"></i> Languages</h3><ul><li>Python (main)</li><li>Java (basic)</li><li>PHP (basic)</li><li>JavaScript</li></ul></div>
-        <div class="stack-category"><h3><i class="fas fa-layer-group"></i> Technologies</h3><ul><li>HTML5, CSS3</li><li>Tkinter</li><li>REST APIs (Flask, requests)</li><li>Git & GitHub</li></ul></div>
-        <div class="stack-category"><h3><i class="fas fa-microchip"></i> Domains</h3><ul><li>Backend Systems</li><li>Automation</li><li>Networking Fundamentals</li><li>Cybersecurity (Learning)</li></ul></div>
-        <div class="stack-category"><h3><i class="fas fa-toolbox"></i> Tools</h3><ul><li>Linux (Ubuntu)</li><li>Wireshark, Nmap</li><li>VS Code</li><li>TryHackMe</li></ul></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ABOUT updated (realistic, no overclaim) -->
-  <section id="about">
-    <div class="container">
-      <h2>about me</h2>
-      <div class="about-text">
-        High school developer focused on backend systems, automation, networking, and cybersecurity. I build practical tools such as data extraction systems and continuously improve through hands-on labs in networking and security. <br><br>
-        I value clean architecture, understanding how data flows across networks, and practicing security from a defensive perspective. Currently expanding my knowledge in infrastructure automation and security fundamentals. <br><br>
-        <span style="color: var(--accent-cyan);"><i class="fas fa-arrow-right"></i> Builder · technical foundation · growth path in cybersecurity</span>
+        <div class="cert-card" onclick="openLightbox('Certifications/Py Training.jpeg', 'Python Training')">
+          <img src="Certifications/Py Training.jpeg" alt="Python Training" class="cert-image">
+          <div class="cert-overlay"><i class="fas fa-expand"></i></div>
+          <div class="cert-info">
+            <h4>Python Training</h4>
+            <p>Professional Python development course. Core programming skills in automation, backend systems, and data processing.</p>
+            <div class="cert-cta"><i class="fas fa-arrow-right"></i> View Certificate</div>
+          </div>
+        </div>
+        <div class="cert-card" onclick="openLightbox('Certifications/Shkolla Digjitale.jpeg', 'Digital School')">
+          <img src="Certifications/Shkolla Digjitale.jpeg" alt="Digital School" class="cert-image">
+          <div class="cert-overlay"><i class="fas fa-expand"></i></div>
+          <div class="cert-info">
+            <h4>Digital School</h4>
+            <p>Comprehensive digital technology training. Hands-on experience with modern development tools and frameworks.</p>
+            <div class="cert-cta"><i class="fas fa-arrow-right"></i> View Certificate</div>
+          </div>
+        </div>
+        <div class="cert-card" onclick="openLightbox('Certifications/Bonevet Training.jpeg', 'Bonevet Training')">
+          <img src="Certifications/Bonevet Training.jpeg" alt="Bonevet Training" class="cert-image">
+          <div class="cert-overlay"><i class="fas fa-expand"></i></div>
+          <div class="cert-info">
+            <h4>Bonevet Training</h4>
+            <p>Professional skills development program. Expertise in cybersecurity awareness and infrastructure fundamentals.</p>
+            <div class="cert-cta"><i class="fas fa-arrow-right"></i> View Certificate</div>
+          </div>
+        </div>
+        <div class="cert-card" onclick="openLightbox('Certifications/Workshop  Frontend Efficiency &amp; Scaling Teams.png', 'Frontend Workshop')">
+          <img src="Certifications/Workshop  Frontend Efficiency &amp; Scaling Teams.png" alt="Frontend Workshop" class="cert-image">
+          <div class="cert-overlay"><i class="fas fa-expand"></i></div>
+          <div class="cert-info">
+            <h4>Frontend Workshop</h4>
+            <p>Advanced web development workshop. Learned efficient frontend practices and team collaboration techniques.</p>
+            <div class="cert-cta"><i class="fas fa-arrow-right"></i> View Certificate</div>
+          </div>
+        </div>
+        <div class="cert-card" onclick="openLightbox('Certifications/Bonevet Training.jpeg', 'Bonevet Training')">
+          <img src="Certifications/Bonevet Training.jpeg" alt="Bonevet Training" class="cert-image">
+          <div class="cert-overlay"><i class="fas fa-expand"></i></div>
+          <div class="cert-info">
+            <h4>Bonevet Training</h4>
+            <p>Professional skills development program. Expertise in cybersecurity awareness and infrastructure fundamentals.</p>
+            <div class="cert-cta"><i class="fas fa-arrow-right"></i> View Certificate</div>
+          </div>
+        </div>
+        <div class="cert-card" onclick="openLightbox('Certifications/Internatioinal Cybersecurity Defense Challenge.jpeg', 'Cybersecurity Challenge')">
+          <img src="Certifications/Internatioinal Cybersecurity Defense Challenge.jpeg" alt="Cybersecurity Challenge" class="cert-image">
+          <div class="cert-overlay"><i class="fas fa-expand"></i></div>
+          <div class="cert-info">
+            <h4>Cybersecurity Defense</h4>
+            <p>International cybersecurity challenge participant. Practical defensive security experience and real-world threat analysis.</p>
+            <div class="cert-cta"><i class="fas fa-arrow-right"></i> View Certificate</div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 </main>
 
+<!-- LIGHTBOX MODAL -->
+<div id="lightbox" class="lightbox" onclick="closeLightboxOnBackdrop(event)">
+  <div class="lightbox-content">
+    <button class="lightbox-close" onclick="closeLightbox()">
+      <i class="fas fa-times"></i>
+    </button>
+    <img id="lightboxImage" src="" alt="Certification" class="lightbox-image">
+    <p class="lightbox-name" id="lightboxName"></p>
+  </div>
+</div>
+
+<!-- CONTACT SECTION -->
+<section id="contact" style="padding: 90px 0 80px;">
+  <div class="container">
+    <h2>get in touch</h2>
+    <div style="background: var(--bg-elevated); border-radius: 2rem; border: 1px solid var(--border-dim); padding: 3rem; text-align: center; max-width: 600px; margin: 0 auto;">
+      <p style="color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 2.5rem;">Let's collaborate on projects, discuss opportunities, or just chat about tech and cybersecurity.</p>
+      <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; margin-top: 2.5rem;">
+        <a href="mailto:arbipacolli08@gmail.com" style="display: inline-flex; flex-direction: column; align-items: center; text-decoration: none; transition: 0.2s;">
+          <div style="width: 60px; height: 60px; background: rgba(34, 211, 238, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 0.8rem; transition: all 0.2s; border: 1px solid var(--border-dim);">
+            <i class="fas fa-envelope" style="color: var(--accent-cyan); font-size: 1.5rem;"></i>
+          </div>
+          <span style="color: var(--text-primary); font-weight: 600;">Email</span>
+          <span style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.3rem;">arbipacolli08@gmail.com</span>
+        </a>
+        <a href="https://www.linkedin.com/in/arbipacolli/" target="_blank" rel="noopener noreferrer" style="display: inline-flex; flex-direction: column; align-items: center; text-decoration: none; transition: 0.2s;">
+          <div style="width: 60px; height: 60px; background: rgba(34, 211, 238, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 0.8rem; transition: all 0.2s; border: 1px solid var(--border-dim);">
+            <i class="fab fa-linkedin" style="color: var(--accent-cyan); font-size: 1.5rem;"></i>
+          </div>
+          <span style="color: var(--text-primary); font-weight: 600;">LinkedIn</span>
+          <span style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.3rem;">Connect with me</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <footer>
   <div class="container">
+    <div style="display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 1.5rem;">
+      <a href="https://www.linkedin.com/in/arbipacolli/" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; justify-content: center; width: 45px; height: 45px; background: var(--surface); border: 1px solid var(--border-dim); border-radius: 50%; color: var(--accent-cyan); text-decoration: none; transition: all 0.2s;" title="LinkedIn">
+        <i class="fab fa-linkedin" style="font-size: 1.2rem;"></i>
+      </a>
+      <a href="https://github.com/arbi-pacolli" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; justify-content: center; width: 45px; height: 45px; background: var(--surface); border: 1px solid var(--border-dim); border-radius: 50%; color: var(--accent-cyan); text-decoration: none; transition: all 0.2s;" title="GitHub">
+        <i class="fab fa-github" style="font-size: 1.2rem;"></i>
+      </a>
+    </div>
     <p>© 2026 Arbi Pacolli — Backend & Systems Developer | Networking & Cybersecurity</p>
     <p style="margin-top: 0.5rem;">Built with clean UI, practical labs, and a realistic growth mindset.</p>
   </div>
 </footer>
 
 <script>
+  // LIGHTBOX FUNCTIONALITY
+  function openLightbox(src, name) {
+    const lightbox = document.getElementById('lightbox');
+    const image = document.getElementById('lightboxImage');
+    const nameEl = document.getElementById('lightboxName');
+    image.src = src;
+    nameEl.textContent = name;
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  
+  function closeLightbox() {
+    const lightbox = document.getElementById('lightbox');
+    lightbox.classList.remove('active');
+    document.body.style.overflow = 'auto';
+  }
+  
+  function closeLightboxOnBackdrop(event) {
+    if(event.target.id === 'lightbox') {
+      closeLightbox();
+    }
+  }
+  
+  // Close lightbox with Escape key
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape') {
+      closeLightbox();
+    }
+  });
+
+  // THEME & NAVIGATION
   (function() {
     const toggle = document.getElementById('themeToggle');
     const body = document.body;
