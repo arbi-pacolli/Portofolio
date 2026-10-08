@@ -21,7 +21,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://arbipacolli.netlify.app/">
   <meta property="og:title" content="Arbi Pacolli | Backend & Systems Developer – Networking & Cybersecurity">
-  <meta name="description" content="Arbi Pacolli – Network Engineer & Developer specializing in backend systems, networking, and cybersecurity.">
+  <meta property="og:description" content="Arbi Pacolli – Network Engineer & Developer specializing in backend systems, networking, and cybersecurity.">
   <meta property="og:image" content="https://arbipacolli.netlify.app/og-image.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -35,7 +35,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://arbipacolli.netlify.app/">
   <meta name="twitter:title" content="Arbi Pacolli | Backend & Systems Developer – Networking & Cybersecurity">
-  <meta name="description" content="Arbi Pacolli – Network Engineer & Developer specializing in backend systems, networking, and cybersecurity.">
+  <meta name="twitter:description" content="Arbi Pacolli – Network Engineer & Developer specializing in backend systems, networking, and cybersecurity.">
   <meta name="twitter:image" content="https://arbipacolli.netlify.app/og-image.jpg">
   <meta name="twitter:image:alt" content="Arbi Pacolli – Backend & Systems Developer Portfolio">
   <meta name="twitter:creator" content="@arbipacolli">
@@ -1040,6 +1040,38 @@
       background: rgba(245, 158, 11, 0.2);
     }
 
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: var(--transition-fast);
+    }
+
+    .project-link:hover {
+      color: var(--accent-hover);
+      gap: 0.75rem;
+    }
+
+    .project-contribution {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      font-size: 0.82rem;
+    }
+
+    .project-note {
+      margin-top: 1.5rem;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-style: italic;
+    }
+
     /* Certifications */
     .certifications-grid {
       display: grid;
@@ -1055,6 +1087,11 @@
       cursor: pointer;
       transition: var(--transition-smooth);
       position: relative;
+    }
+
+    .cert-card:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 4px;
     }
 
     .cert-card:hover {
@@ -1399,7 +1436,7 @@
               <a href="#projects" class="btn-primary">
                 <i class="fas fa-code"></i> View My Work
               </a>
-              <a href="resume.pdf" download class="btn-secondary">
+              <a href="cv/Arbi Pacolli CV.pdf" download class="btn-secondary">
                 <i class="fas fa-download"></i> Download Resume
               </a>
             </div>
@@ -1464,7 +1501,7 @@
             </div>
             <ul style="list-style: none; color: var(--text-secondary); line-height: 2; font-size: 0.9rem;">
               <li><i class="fas fa-check-circle" style="color: var(--accent);"></i> Python Developer (Primary)</li>
-              <li><i class="fas fa-check-circle" style="color: var(--accent);"></i> CCNA Certified (3 Modules)</li>
+              <li><i class="fas fa-check-circle" style="color: var(--accent);"></i> Completed three CCNA coursework modules</li>
               <li><i class="fas fa-check-circle" style="color: var(--accent);"></i> Hackathon Participant</li>
               <li><i class="fas fa-check-circle" style="color: var(--accent);"></i> Cybersecurity Enthusiast</li>
               <li><i class="fas fa-check-circle" style="color: var(--accent);"></i> Based in Kosovo</li>
@@ -1479,6 +1516,22 @@
       <div class="container">
         <h2 class="reveal">Professional Experience</h2>
         <div class="experience-timeline">
+          <div class="experience-item reveal">
+            <div class="experience-content">
+              <div class="experience-header">
+                <div>
+                  <div class="experience-role">Junior Anti-Money Laundering & KYC Officer</div>
+                  <div class="experience-company">Paysera</div>
+                </div>
+                <div class="experience-date">September 2026 - Ongoing</div>
+              </div>
+              <ul class="experience-details">
+                <li><i class="fas fa-circle"></i> Conduct KYC reviews and customer due diligence to verify identities and assess customer risk.</li>
+                <li><i class="fas fa-circle"></i> Perform PEP, sanctions, and adverse media screening while reviewing customer information and documentation.</li>
+                <li><i class="fas fa-circle"></i> Identify potential AML risks, escalate suspicious activity, and ensure compliance with internal policies and regulatory requirements.</li>
+              </ul>
+            </div>
+          </div>
           <div class="experience-item reveal">
             <div class="experience-content">
               <div class="experience-header">
@@ -1571,7 +1624,7 @@
             </ul>
           </div>
           <div class="core-card reveal">
-            <div class="core-icon"><i class="fas fa-shield-haltered"></i></div>
+            <div class="core-icon"><i class="fas fa-shield-halved"></i></div>
             <h3>Cybersecurity Defense</h3>
             <ul class="core-list">
               <li><i class="fas fa-angle-right"></i> Security Fundamentals</li>
@@ -1592,20 +1645,31 @@
           <div class="project-card reveal">
             <div class="project-icon"><i class="fas fa-newspaper"></i></div>
             <h3 class="project-title">Undetectable News Extraction System</h3>
-            <p>Python-based scraping engine utilizing randomized headers, request throttling, and structured CSV output.
-              Engineered with anti-detection mechanisms for reliable data collection at scale.</p>
+            <p>Python-based scraping engine using randomized headers, request throttling, and structured CSV output.</p>
             <div class="tech-stack">
               <span>Python</span><span>BeautifulSoup</span><span>Requests</span><span>CSV</span><span>Anti-Detection</span>
             </div>
+            <p class="project-contribution"><strong>My contribution:</strong> Built the scraper and its CSV data-export
+              workflow.</p>
+            <p class="project-note">Source code is private.</p>
           </div>
           <div class="project-card reveal">
             <div class="project-icon"><i class="fas fa-shield-alt"></i></div>
             <h3 class="project-title">Cyber Shield Hub</h3>
-            <p>Interactive cybersecurity learning platform featuring vulnerability databases, defensive strategies, and
-              real-world threat analysis techniques. Built with modern web technologies.</p>
+            <p>A front-end concept exploring cybersecurity awareness and defensive-security topics through an interactive
+              website.</p>
             <div class="tech-stack">
               <span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>Security</span><span>Web Defense</span>
             </div>
+            <p class="project-contribution"><strong>My contribution:</strong> Designed and built the interactive website
+              concept.</p>
+            <p class="project-note">Concept/demo only; this project does not provide real security monitoring or
+              incident response. The live demo currently displays service claims and testimonials; verify or replace
+              that copy before sharing it as real. Source code is private.</p>
+            <a class="project-link" href="https://cyber-shield-hub.netlify.app/"
+              target="_blank" rel="noopener noreferrer">
+              Open Concept Demo <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+            </a>
           </div>
           <div class="project-card reveal">
             <div class="project-icon"><i class="fas fa-gamepad"></i></div>
@@ -1615,6 +1679,50 @@
             <div class="tech-stack">
               <span>JavaScript</span><span>Canvas API</span><span>HTML5</span><span>Game Dev</span>
             </div>
+            <p class="project-contribution"><strong>My contribution:</strong> Built the browser game, scoring, and
+              difficulty progression.</p>
+            <a class="project-link" href="https://flapmaster.netlify.app/"
+              target="_blank" rel="noopener noreferrer">
+              Play Live <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+            </a>
+            <a class="project-link" href="https://github.com/arbi-pacolli/Flappy-Bird"
+              target="_blank" rel="noopener noreferrer">
+              View on GitHub <i class="fas fa-arrow-right" aria-hidden="true"></i>
+            </a>
+          </div>
+          <div class="project-card reveal">
+            <div class="project-icon"><i class="fas fa-star"></i></div>
+            <h3 class="project-title">BlackNova Studio</h3>
+            <p>A web presence for a creative studio offering website development, UI/UX design, brand identity, and
+              social media services for startups and small businesses.</p>
+            <div class="tech-stack">
+              <span>HTML</span><span>CSS</span><span>JavaScript</span><span>UI/UX</span><span>Web Design</span>
+            </div>
+            <p class="project-contribution"><strong>My contribution:</strong> Designed and built the studio website and
+              its responsive service and project sections.</p>
+            <a class="project-link" href="https://blacknova-studio.netlify.app/"
+              target="_blank" rel="noopener noreferrer">
+              Visit Live Site <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+            </a>
+            <a class="project-link" href="https://github.com/arbi-pacolli/BlackNova_Studio"
+              target="_blank" rel="noopener noreferrer">
+              View on GitHub <i class="fas fa-arrow-right" aria-hidden="true"></i>
+            </a>
+          </div>
+          <div class="project-card reveal">
+            <div class="project-icon"><i class="fas fa-dragon"></i></div>
+            <h3 class="project-title">Mystic Quest</h3>
+            <p>A browser-based adventure game with a start screen, instructions, audio settings, and themed environments.
+              Players can explore using keyboard controls.</p>
+            <div class="tech-stack">
+              <span>HTML</span><span>CSS</span><span>JavaScript</span><span>Game Development</span>
+            </div>
+            <p class="project-contribution"><strong>My contribution:</strong> Built the game menu, instructions, audio
+              settings, and themed game screens.</p>
+            <a class="project-link" href="https://github.com/arbi-pacolli/Mystic_Quest"
+              target="_blank" rel="noopener noreferrer">
+              View source on GitHub <i class="fas fa-arrow-right" aria-hidden="true"></i>
+            </a>
           </div>
         </div>
       </div>
@@ -1623,9 +1731,10 @@
     <!-- Certifications -->
     <section id="certifications">
       <div class="container">
-        <h2 class="reveal">Certifications & Achievements</h2>
+        <h2 class="reveal">Certificates & Achievements</h2>
         <div class="certifications-grid">
           <div class="cert-card reveal"
+            role="button" tabindex="0" aria-label="View Hackathon Competition credential"
             onclick="openLightbox('Certifications/Hackathon 112.jpeg', 'Hackathon Competition')">
             <div class="cert-image"><img src="Certifications/Hackathon 112.jpeg" alt="Hackathon Competition"
                 loading="lazy"></div>
@@ -1637,36 +1746,40 @@
             </div>
           </div>
           <div class="cert-card reveal"
+            role="button" tabindex="0" aria-label="View CCNA 1: Introduction to Networks course certificate"
             onclick="openLightbox('Certifications/CCNA 1.jpeg', 'CCNA 1: Introduction to Networks')">
             <div class="cert-image"><img src="Certifications/CCNA 1.jpeg" alt="CCNA 1" loading="lazy"></div>
             <div class="cert-overlay"><i class="fas fa-expand"></i></div>
             <div class="cert-info">
               <h4>CCNA 1: Introduction to Networks</h4>
-              <p>Cisco Certified Network Associate – Networking fundamentals, protocols, and device configuration.</p>
+              <p>Cisco Networking Academy coursework covering networking fundamentals, protocols, and device configuration.</p>
               <div class="cert-cta"><i class="fas fa-arrow-right"></i> View Credential</div>
             </div>
           </div>
           <div class="cert-card reveal"
+            role="button" tabindex="0" aria-label="View CCNA 2: Switching, Routing, and Wireless course certificate"
             onclick="openLightbox('Certifications/CCNA 2.jpeg', 'CCNA 2: Switching, Routing, and Wireless')">
             <div class="cert-image"><img src="Certifications/CCNA 2.jpeg" alt="CCNA 2" loading="lazy"></div>
             <div class="cert-overlay"><i class="fas fa-expand"></i></div>
             <div class="cert-info">
               <h4>CCNA 2: Switching, Routing, and Wireless</h4>
-              <p>Advanced network configuration and security protocols within enterprise environments.</p>
+              <p>Cisco Networking Academy coursework in switching, routing, wireless networking, and security fundamentals.</p>
               <div class="cert-cta"><i class="fas fa-arrow-right"></i> View Credential</div>
             </div>
           </div>
           <div class="cert-card reveal"
+            role="button" tabindex="0" aria-label="View CCNA 3: Enterprise Networking course certificate"
             onclick="openLightbox('Certifications/CCNA 3.jpeg', 'CCNA 3: Enterprise Networking')">
             <div class="cert-image"><img src="Certifications/CCNA 3.jpeg" alt="CCNA 3" loading="lazy"></div>
             <div class="cert-overlay"><i class="fas fa-expand"></i></div>
             <div class="cert-info">
               <h4>CCNA 3: Enterprise Networking</h4>
-              <p>Enterprise-level network design, security, and automation for scalable infrastructure.</p>
+              <p>Cisco Networking Academy coursework focused on enterprise networking concepts and infrastructure.</p>
               <div class="cert-cta"><i class="fas fa-arrow-right"></i> View Credential</div>
             </div>
           </div>
-          <div class="cert-card reveal" onclick="openLightbox('Certifications/Py Training.jpeg', 'Python Development')">
+          <div class="cert-card reveal" role="button" tabindex="0" aria-label="View Python Development certificate"
+            onclick="openLightbox('Certifications/Py Training.jpeg', 'Python Development')">
             <div class="cert-image"><img src="Certifications/Py Training.jpeg" alt="Python Training" loading="lazy">
             </div>
             <div class="cert-overlay"><i class="fas fa-expand"></i></div>
@@ -1677,6 +1790,7 @@
             </div>
           </div>
           <div class="cert-card reveal"
+            role="button" tabindex="0" aria-label="View Digital School certificate"
             onclick="openLightbox('Certifications/Shkolla Digjitale.jpeg', 'Digital School')">
             <div class="cert-image"><img src="Certifications/Shkolla Digjitale.jpeg" alt="Digital School"
                 loading="lazy"></div>
@@ -1688,6 +1802,7 @@
             </div>
           </div>
           <div class="cert-card reveal"
+            role="button" tabindex="0" aria-label="View Bonevet Professional Training certificate"
             onclick="openLightbox('Certifications/Bonevet Training.jpeg', 'Bonevet Professional Training')">
             <div class="cert-image"><img src="Certifications/Bonevet Training.jpeg" alt="Bonevet Training"
                 loading="lazy"></div>
@@ -1699,6 +1814,7 @@
             </div>
           </div>
           <div class="cert-card reveal"
+            role="button" tabindex="0" aria-label="View Frontend Workshop certificate"
             onclick="openLightbox('Certifications/Workshop  Frontend Efficiency &amp; Scaling Teams.png', 'Frontend Workshop')">
             <div class="cert-image"><img src="Certifications/Workshop  Frontend Efficiency &amp; Scaling Teams.png"
                 alt="Frontend Workshop" loading="lazy"></div>
@@ -1710,6 +1826,7 @@
             </div>
           </div>
           <div class="cert-card reveal"
+            role="button" tabindex="0" aria-label="View Cybersecurity Defense Challenge certificate"
             onclick="openLightbox('Certifications/Internatioinal Cybersecurity Defense Challenge.jpeg', 'Cybersecurity Defense Challenge')">
             <div class="cert-image"><img src="Certifications/Internatioinal Cybersecurity Defense Challenge.jpeg"
                 alt="Cybersecurity Defense Challenge" loading="lazy"></div>
@@ -1745,11 +1862,6 @@
               <span>LinkedIn</span>
               <small>Connect Professionally</small>
             </a>
-            <a href="resume.pdf" download class="contact-link">
-              <div class="contact-link-icon"><i class="fas fa-file-pdf"></i></div>
-              <span>Resume</span>
-              <small>Download PDF</small>
-            </a>
           </div>
         </div>
       </div>
@@ -1757,9 +1869,11 @@
   </main>
 
   <!-- Lightbox -->
-  <div id="lightbox" class="lightbox" onclick="closeLightboxOnBackdrop(event)">
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-labelledby="lightboxName"
+    onclick="closeLightboxOnBackdrop(event)">
     <div class="lightbox-content">
-      <button class="lightbox-close" onclick="closeLightbox()"><i class="fas fa-times"></i></button>
+      <button class="lightbox-close" id="lightboxClose" aria-label="Close certificate preview"
+        onclick="closeLightbox()"><i class="fas fa-times" aria-hidden="true"></i></button>
       <img id="lightboxImage" src="" alt="Certification">
       <p style="text-align: center; color: var(--text-secondary); margin-top: 1rem; font-weight: 500;"
         id="lightboxName"></p>
@@ -1815,21 +1929,37 @@
     }
 
     // Lightbox
+    let lightboxTrigger = null;
     function openLightbox(src, name) {
+      lightboxTrigger = document.activeElement;
       document.getElementById('lightboxImage').src = src;
+      document.getElementById('lightboxImage').alt = name;
       document.getElementById('lightboxName').textContent = name;
       document.getElementById('lightbox').classList.add('active');
       document.body.style.overflow = 'hidden';
+      document.getElementById('lightboxClose').focus();
     }
     function closeLightbox() {
       document.getElementById('lightbox').classList.remove('active');
       document.body.style.overflow = '';
+      if (lightboxTrigger && typeof lightboxTrigger.focus === 'function') {
+        lightboxTrigger.focus();
+      }
+      lightboxTrigger = null;
     }
     function closeLightboxOnBackdrop(e) {
       if (e.target.id === 'lightbox') closeLightbox();
     }
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeLightbox();
+    });
+    document.querySelectorAll('.cert-card[role="button"]').forEach(card => {
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          card.click();
+        }
+      });
     });
 
     // Theme Toggle
@@ -1927,13 +2057,14 @@
     function animateCounter(el, target, duration = 2000) {
       let start = 0;
       const increment = target / (duration / 16);
+      const suffix = el.textContent.trim().endsWith('+') ? '+' : '';
       const timer = setInterval(() => {
         start += increment;
         if (start >= target) {
-          el.textContent = target + '+';
+          el.textContent = target + suffix;
           clearInterval(timer);
         } else {
-          el.textContent = Math.floor(start) + '+';
+          el.textContent = Math.floor(start) + suffix;
         }
       }, 16);
     }
