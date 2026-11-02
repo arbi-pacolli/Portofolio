@@ -1079,17 +1079,14 @@
 
     /* Certifications */
     .certifications-grid {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: flex-start;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 1.5rem;
+      align-items: stretch;
     }
 
     .cert-card {
-      flex: 0 1 auto;
-      width: fit-content;
-      min-width: min(100%, 280px);
-      max-width: min(100%, 380px);
+      width: 100%;
       background: var(--bg-card);
       border: 1px solid var(--border-color);
       border-radius: var(--radius-lg);
@@ -1124,6 +1121,18 @@
       height: 100%;
       object-fit: cover;
       transition: transform 0.5s ease;
+    }
+
+    @media (max-width: 1024px) {
+      .certifications-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .certifications-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     .cert-overlay {
